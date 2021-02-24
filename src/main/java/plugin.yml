@@ -1,0 +1,10 @@
+name: LSD-Plugin
+main: net.lax1dude.lsd_plugin.PluginMain
+version: 1.0
+api-version: 1.13
+commands: 
+  lsdplugin:
+    description: Configure LSD-Plugin
+    usage: /lsdplugin <reload>
+    permission: lsdplugin.reload
+    permission-message: You don't have <permission>
