@@ -5,11 +5,6 @@ api-version: 1.13
 commands: 
   lsdplugin:
     description: Configure LSD-Plugin
-    usage: /lsdplugin <reload>
-    permission: lsdplugin.reload
-    permission-message: You don't have <permission>
-  openlab:
-    description: Opens the lab GUI (for debug purposes)
-    usage: /openlab
-    permission: lsdplugin.openlab
+    usage: /lsdplugin help
+    permission: lsdplugin.command
     permission-message: You don't have <permission>

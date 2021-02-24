@@ -7,12 +7,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.lax1dude.lsd_plugin.tripping.TripManager;
 import net.radian628.lsd_crafting_system.CraftingSystem;
 
 public class PluginMain extends JavaPlugin {
 
-	CraftingSystem craftingSystem;
-	
+	public TripManager tripMgr;
+	public CraftingSystem craftingSystem;
+
 	public void onLoad() {
 		getLogger().info("LSD-Plugin is loaded");
 	}
@@ -22,21 +24,46 @@ public class PluginMain extends JavaPlugin {
 	}
 
 	public void onEnable() {
-		craftingSystem = new CraftingSystem(this);
 		getLogger().info("LSD-Plugin is enabled");
+		tripMgr = new TripManager(this);
+		craftingSystem = new CraftingSystem(this);
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		String cmd = command.getName();
-		
-		switch (cmd) {
-			case "openlab":
-				if (sender instanceof Player) {
-					craftingSystem.openLab((Player)sender);
+		if (command.getName().equalsIgnoreCase("lsdplugin")) {
+			if(args.length < 1) {
+				sender.sendMessage("Usage: /lsdplugin help");
+			}else {
+				if(args[0].equalsIgnoreCase("reload")) {
+					
+				}else if(args[0].equalsIgnoreCase("help")) {
+					
+				}else if(args[0].equalsIgnoreCase("dose")) {
+					try {
+						int mcg = Integer.parseInt(args[1]);
+						if(args.length == 3) {
+							Player p = getServer().getPlayer(args[2]);
+							if(p != null) {
+								tripMgr.dose(p, mcg);
+							}else {
+								sender.sendMessage("That player does not exist");
+							}
+						}else if(args.length == 2) {
+							if(sender instanceof Player) {
+								tripMgr.dose((Player)sender, mcg);
+							}
+						}
+					}catch(Throwable t) {
+						sender.sendMessage("Usage: /lsdplugin dose <micrograms> [player]");
+					}
+				}else if(args[0].equalsIgnoreCase("openlab")) {
+					if(sender instanceof Player) {
+						craftingSystem.openLab((Player)sender);
+					}
 				}
-				break;
+			}
+			return true;
 		}
-		
 		return false;
 	}
 
