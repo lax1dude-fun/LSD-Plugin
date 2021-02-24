@@ -8,3 +8,8 @@ commands:
     usage: /lsdplugin <reload>
     permission: lsdplugin.reload
     permission-message: You don't have <permission>
+  openlab:
+    description: Opens the lab GUI (for debug purposes)
+    usage: /openlab
+    permission: lsdplugin.openlab
+    permission-message: You don't have <permission>
