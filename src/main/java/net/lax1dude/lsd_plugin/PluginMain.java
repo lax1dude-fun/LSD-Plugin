@@ -7,6 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+
 import net.lax1dude.lsd_plugin.tripping.TripManager;
 import net.radian628.lsd_crafting_system.CraftingSystem;
 
@@ -14,6 +17,8 @@ public class PluginMain extends JavaPlugin {
 
 	public TripManager tripMgr;
 	public CraftingSystem craftingSystem;
+	public static ProtocolManager protocolManager;
+	public static PluginMain instance;
 
 	public void onLoad() {
 		getLogger().info("LSD-Plugin is loaded");
@@ -24,9 +29,12 @@ public class PluginMain extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		instance = this;
 		getLogger().info("LSD-Plugin is enabled");
 		tripMgr = new TripManager(this);
 		craftingSystem = new CraftingSystem(this);
+		getServer().getPluginManager().registerEvents(tripMgr, this);
+		protocolManager = ProtocolLibrary.getProtocolManager();
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -45,6 +53,7 @@ public class PluginMain extends JavaPlugin {
 							Player p = getServer().getPlayer(args[2]);
 							if(p != null) {
 								tripMgr.dose(p, mcg);
+								sender.sendMessage("You have been dosed");
 							}else {
 								sender.sendMessage("That player does not exist");
 							}

@@ -2,6 +2,7 @@ name: LSD-Plugin
 main: net.lax1dude.lsd_plugin.PluginMain
 version: 1.0
 api-version: 1.13
+depend: [ProtocolLib]
 commands: 
   lsdplugin:
     description: Configure LSD-Plugin
