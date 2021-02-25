@@ -29,6 +29,7 @@ public class PluginMain extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		saveDefaultConfig();
 		instance = this;
 		getLogger().info("LSD-Plugin is enabled");
 		tripMgr = new TripManager(this);
