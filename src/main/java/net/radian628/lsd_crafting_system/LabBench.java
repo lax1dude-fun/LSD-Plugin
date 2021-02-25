@@ -85,13 +85,14 @@ public class LabBench implements Listener {
 		String recipeName = null;
 		
 		Iterator<Entry<String, Object>> recipeIterator = recipes.entrySet().iterator();
+		boolean recipeMatches = false;
 		while (recipeIterator.hasNext()) {
+			
+			recipeMatches = true;
 			
 			Entry<String, Object> recipe = recipeIterator.next();
 			
 			recipeName = recipe.getKey();
-			
-			boolean recipeMatches = true;
 			
 
 			String configKey = "recipes." + recipeName + ".ingredients";
@@ -99,18 +100,23 @@ public class LabBench implements Listener {
 			
 			for (int ii = 0; 9 > ii; ii++) {
 				
-				plugin.getLogger().info(configKey);
-				
 				ItemStack requiredIngredient = (ItemStack)requiredIngredients.get(String.valueOf(ii));
-			
-				//plugin.getLogger().info(requiredIngredient.getItemMeta().getDisplayName());
 				
-				if (!(ingredients[ii] == null && requiredIngredient == null)) {
-					if (ingredients[ii] == null || requiredIngredient == null) {
-						recipeMatches = false;
-					} else if (!ingredients[ii].isSimilar(requiredIngredient) || requiredIngredient.getAmount() > ingredients[ii].getAmount()) {
-						recipeMatches = false;
+				boolean ingredientMatches = false;
+				
+				if (!(ingredients[ii] == null ^ requiredIngredient == null) && ingredients[ii].getType() == requiredIngredient.getType()) {
+					if (!requiredIngredient.getItemMeta().hasCustomModelData() && !ingredients[ii].getItemMeta().hasCustomModelData()) {
+						ingredientMatches = true;
+					} else if (requiredIngredient.getItemMeta().hasCustomModelData() && ingredients[ii].getItemMeta().hasCustomModelData()) {
+						if (requiredIngredient.getItemMeta().hasCustomModelData() == ingredients[ii].getItemMeta().hasCustomModelData()) {
+							ingredientMatches = true;
+						}
 					}
+				}
+				
+				if (!ingredientMatches) {
+					recipeMatches = false;
+					break;
 				}
 			}
 			
@@ -120,7 +126,7 @@ public class LabBench implements Listener {
 			
 		}
 		
-		if (recipeName != null) {
+		if (recipeMatches && recipeName != null) {
 			ItemStack[] requiredIngredients = new ItemStack[9];
 
 			String configKey = "recipes." + recipeName + ".ingredients";
@@ -134,6 +140,7 @@ public class LabBench implements Listener {
 			}
 			
 			ItemStack product = plugin.getConfig().getItemStack("recipes." + recipeName + ".product");
+			
 			
 			return new LabBenchRecipe(requiredIngredients, product);
 			

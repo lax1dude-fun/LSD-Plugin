@@ -10,7 +10,7 @@ public class LabBenchRecipe {
 	
 	public boolean isCraftableWith(ItemStack[] ingredientsToTest) {
 		for (int i = 0; 9 > i; i++) {
-			if (!ingredients[i].isSimilar(ingredientsToTest[i]) || ingredients[i].getAmount() > ingredientsToTest[i].getAmount()) {
+			if (ingredientsToTest[i] == null || ingredients[i].getAmount() > ingredientsToTest[i].getAmount()) {
 				return false;
 			}
 		}
