@@ -104,12 +104,16 @@ public class LabBench implements Listener {
 				
 				boolean ingredientMatches = false;
 				
-				if (!(ingredients[ii] == null ^ requiredIngredient == null) && ingredients[ii].getType() == requiredIngredient.getType()) {
-					if (!requiredIngredient.getItemMeta().hasCustomModelData() && !ingredients[ii].getItemMeta().hasCustomModelData()) {
+				if (!(ingredients[ii] == null ^ requiredIngredient == null)) {
+					if (ingredients[ii] == null && requiredIngredient == null) {
 						ingredientMatches = true;
-					} else if (requiredIngredient.getItemMeta().hasCustomModelData() && ingredients[ii].getItemMeta().hasCustomModelData()) {
-						if (requiredIngredient.getItemMeta().hasCustomModelData() == ingredients[ii].getItemMeta().hasCustomModelData()) {
+					} else if (ingredients[ii].getType() == requiredIngredient.getType()) {
+						if (!requiredIngredient.getItemMeta().hasCustomModelData() && !ingredients[ii].getItemMeta().hasCustomModelData()) {
 							ingredientMatches = true;
+						} else if (requiredIngredient.getItemMeta().hasCustomModelData() && ingredients[ii].getItemMeta().hasCustomModelData()) {
+							if (requiredIngredient.getItemMeta().hasCustomModelData() == ingredients[ii].getItemMeta().hasCustomModelData()) {
+								ingredientMatches = true;
+							}
 						}
 					}
 				}

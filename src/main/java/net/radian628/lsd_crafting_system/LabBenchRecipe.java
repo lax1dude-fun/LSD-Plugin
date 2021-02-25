@@ -10,8 +10,10 @@ public class LabBenchRecipe {
 	
 	public boolean isCraftableWith(ItemStack[] ingredientsToTest) {
 		for (int i = 0; 9 > i; i++) {
-			if (ingredientsToTest[i] == null || ingredients[i].getAmount() > ingredientsToTest[i].getAmount()) {
-				return false;
+			if (ingredients[i] != null) {
+				if (ingredientsToTest[i] == null || ingredients[i].getAmount() > ingredientsToTest[i].getAmount()) {
+					return false;
+				}
 			}
 		}
 		
@@ -20,8 +22,10 @@ public class LabBenchRecipe {
 	
 	public void consume(ItemStack[] ingredientsToConsume, LabBench labBench) {
 		for (int i = 0; 9 > i; i++) {
-			ingredientsToConsume[i].setAmount(ingredientsToConsume[i].getAmount() - ingredients[i].getAmount());
-			labBench.labInventory.setItem(labBench.getEditableSlotIndex(i), ingredientsToConsume[i]);
+			if (ingredients[i] != null) {
+				ingredientsToConsume[i].setAmount(ingredientsToConsume[i].getAmount() - ingredients[i].getAmount());
+				labBench.labInventory.setItem(labBench.getEditableSlotIndex(i), ingredientsToConsume[i]);
+			}
 		}
 	}
 	
