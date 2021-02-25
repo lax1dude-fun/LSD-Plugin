@@ -24,6 +24,7 @@ public class PluginMain extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		saveDefaultConfig();
 		getLogger().info("LSD-Plugin is enabled");
 		tripMgr = new TripManager(this);
 		craftingSystem = new CraftingSystem(this);
