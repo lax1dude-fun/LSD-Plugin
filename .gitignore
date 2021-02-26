@@ -3,4 +3,4 @@
 .project
 /bin/
 rundir
-resource-pack-directory.txt
+node_modules
