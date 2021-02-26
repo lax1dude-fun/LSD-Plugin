@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +34,7 @@ public class CraftingSystem implements Listener {
 		new LabBench(plugin, player);
 	}
 	
-	public void handleCustomBlockDrop(Block block, Player blockBreaker) {
+	public void handleCustomBlockDrop(Block block, Player blockBreaker, BlockBreakEvent breakEvent) {
 		World world = block.getWorld();
 		BlockData blockData = block.getBlockData();
 		
@@ -67,11 +68,28 @@ public class CraftingSystem implements Listener {
 				}
 			}
 			
+		} else if (blockData.getMaterial() == Material.IRON_ORE) {
+			if (blockBreaker != null && !hasSilkTouch && breakEvent != null) {
+				if (rand.nextFloat() > 0.9) {
+					ItemStack pyrite = new ItemStack(Material.IRON_NUGGET);
+					ItemMeta pyriteMeta = pyrite.getItemMeta();
+					pyriteMeta.setCustomModelData(666);
+					pyriteMeta.setDisplayName(ChatColor.RESET + "Pyrite");
+					pyrite.setItemMeta(pyriteMeta);
+					breakEvent.setDropItems(false);					
+					world.dropItemNaturally(block.getLocation(), pyrite);
+				}
+			}
 		}
 	}	
 	
 	@EventHandler
 	public void onBreakBlock(BlockBreakEvent event) {
-		handleCustomBlockDrop(event.getBlock(), event.getPlayer());
+		handleCustomBlockDrop(event.getBlock(), event.getPlayer(), event);
+	}
+	
+	@EventHandler
+	public void onLeavesDecay(LeavesDecayEvent event) {
+		handleCustomBlockDrop(event.getBlock(), null, null);
 	}
 }
