@@ -1,0 +1,15 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "item/iron_nugget"
+    },
+
+    "overrides": [
+        {
+            "predicate": {
+                "custom_model_data": 666
+            },
+            "model": "item/pyrite"
+        }
+    ]
+}

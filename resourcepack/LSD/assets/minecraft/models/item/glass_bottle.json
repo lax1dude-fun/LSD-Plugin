@@ -1,0 +1,33 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "item/glass_bottle"
+    },
+
+    "overrides": [
+        {
+            "predicate": {
+                "custom_model_data": 666
+            },
+            "model": "item/citric_acid"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 667
+            },
+            "model": "item/sulfuric_acid"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 668
+            },
+            "model": "item/diethyl_ether"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 669
+            },
+            "model": "item/ethanol"
+        }
+    ]
+}
