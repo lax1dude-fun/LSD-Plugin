@@ -7,9 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-
 import net.lax1dude.lsd_plugin.tripping.TripManager;
 import net.radian628.lsd_crafting_system.CraftingSystem;
 
@@ -17,7 +14,6 @@ public class PluginMain extends JavaPlugin {
 
 	public TripManager tripMgr;
 	public CraftingSystem craftingSystem;
-	public static ProtocolManager protocolManager;
 	public static PluginMain instance;
 
 	public void onLoad() {
@@ -35,7 +31,6 @@ public class PluginMain extends JavaPlugin {
 		tripMgr = new TripManager(this);
 		craftingSystem = new CraftingSystem(this);
 		getServer().getPluginManager().registerEvents(tripMgr, this);
-		protocolManager = ProtocolLibrary.getProtocolManager();
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -48,7 +43,7 @@ public class PluginMain extends JavaPlugin {
 				}else if(args[0].equalsIgnoreCase("help")) {
 					
 				}else if(args[0].equalsIgnoreCase("dose")) {
-					if(args.length > 1) {	
+					if(args.length > 1) {
 						try {
 							int mcg = Integer.parseInt(args[1]);
 							if(args.length == 3) {
