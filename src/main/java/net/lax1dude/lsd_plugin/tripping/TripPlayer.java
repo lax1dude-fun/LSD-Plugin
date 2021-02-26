@@ -39,7 +39,7 @@ public class TripPlayer {
 		timer += 1;
 		if(currentDose > 25f) {
 			if(timer % 20 == 0) {
-				if(timer % (random.nextInt((int)(60000 / currentDose)) + 1) == 0) {
+				if(timer % (random.nextInt((int)(30000 / currentDose)) + 1) == 0) {
 					try {
 						PacketContainer fakeDamage = new PacketContainer(PacketType.Play.Server.UPDATE_HEALTH);
 						
@@ -68,16 +68,10 @@ public class TripPlayer {
 					}
 				}
 				if(timer % (random.nextInt((int)(20000 / currentDose)) + 1) == 0) {
-					givePotionEffect(9, 0, random.nextInt(400));
+					givePotionEffect(9, 0, random.nextInt(Math.max(400 - (int)(currentDose / 3f), 150)));
 				}
 				if(timer % (random.nextInt((int)(40000 / currentDose)) + 1) == 0) {
-					givePotionEffect(16, 0, random.nextInt(10));
-				}
-				if(timer % (random.nextInt((int)(80000 / currentDose)) + 1) == 0) {
-					givePotionEffect(1, 2, random.nextInt(100));
-				}
-				if(timer % (random.nextInt((int)(80000 / currentDose)) + 1) == 0) {
-					givePotionEffect(2, 2, random.nextInt(100));
+					givePotionEffect(16, 0, random.nextInt(5));
 				}
 			}
 			if(timer % (random.nextInt((int)(3000 / currentDose)) + 1) == 0) {
@@ -85,13 +79,13 @@ public class TripPlayer {
 					
 					PacketContainer playerAbilities = new PacketContainer(PacketType.Play.Server.ABILITIES);
 					playerAbilities.getBooleans()
-					.write(0, Boolean.valueOf(player.isInvulnerable()))
-					.write(1, Boolean.valueOf(player.isFlying()))
-					.write(2, Boolean.valueOf(player.getAllowFlight()))
-					.write(3, Boolean.valueOf(player.getGameMode() == GameMode.CREATIVE));
+					.write(0, player.isInvulnerable())
+					.write(1, player.isFlying())
+					.write(2, player.getAllowFlight())
+					.write(3, player.getGameMode() == GameMode.CREATIVE);
 					playerAbilities.getFloat()
 					.write(0, 0.05f)
-					.write(1, (random.nextFloat() - 0.5f) * (currentDose / 60000f) + 0.1f);
+					.write(1, (random.nextFloat() - 0.5f) * (currentDose / 100000f) * (1.0f + getPlayerVelocity(player) * 50.0f) + 0.1f);
 					
 					PluginMain.protocolManager.sendServerPacket(player, playerAbilities);
 				
@@ -99,7 +93,7 @@ public class TripPlayer {
 					e.printStackTrace();
 				}
 			}
-			if(timer % (random.nextInt((int)(60000 / currentDose)) + 1) == 0) {
+			if(timer % (random.nextInt((int)(120000 / currentDose)) + 1) == 0) {
 				try {
 					
 					PacketContainer playerAbilities = new PacketContainer(PacketType.Play.Server.ABILITIES);
@@ -110,7 +104,7 @@ public class TripPlayer {
 					.write(3, Boolean.valueOf(player.getGameMode() == GameMode.CREATIVE));
 					playerAbilities.getFloat()
 					.write(0, 0.05f)
-					.write(1, (random.nextFloat() - 0.5f) * (currentDose / 3000f) + 0.1f);
+					.write(1, (random.nextFloat() - 0.5f) * (currentDose / 3000f) * (1.0f + getPlayerVelocity(player) * 20.0f) + 0.1f);
 					
 					PluginMain.protocolManager.sendServerPacket(player, playerAbilities);
 				
@@ -145,6 +139,10 @@ public class TripPlayer {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static float getPlayerVelocity(Player p) {
+		return (float) p.getVelocity().length();
 	}
 
 }

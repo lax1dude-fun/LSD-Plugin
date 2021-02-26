@@ -48,23 +48,27 @@ public class PluginMain extends JavaPlugin {
 				}else if(args[0].equalsIgnoreCase("help")) {
 					
 				}else if(args[0].equalsIgnoreCase("dose")) {
-					try {
-						int mcg = Integer.parseInt(args[1]);
-						if(args.length == 3) {
-							Player p = getServer().getPlayer(args[2]);
-							if(p != null) {
-								tripMgr.dose(p, mcg);
-								sender.sendMessage("You have been dosed");
-							}else {
-								sender.sendMessage("That player does not exist");
+					if(args.length > 1) {	
+						try {
+							int mcg = Integer.parseInt(args[1]);
+							if(args.length == 3) {
+								Player p = getServer().getPlayer(args[2]);
+								if(p != null) {
+									tripMgr.dose(p, mcg);
+									sender.sendMessage("You have been dosed");
+								}else {
+									sender.sendMessage("That player does not exist");
+								}
+							}else if(args.length == 2) {
+								if(sender instanceof Player) {
+									tripMgr.dose((Player)sender, mcg);
+								}
 							}
-						}else if(args.length == 2) {
-							if(sender instanceof Player) {
-								tripMgr.dose((Player)sender, mcg);
-							}
+						}catch(Throwable t) {
+							sender.sendMessage("Usage: /lsdplugin dose <micrograms> [player]");
 						}
-					}catch(Throwable t) {
-						sender.sendMessage("Usage: /lsdplugin dose <micrograms> [player]");
+					}else {
+						sender.sendMessage("Current dose: " + tripMgr.getDose((Player)sender));
 					}
 				}else if(args[0].equalsIgnoreCase("openlab")) {
 					if(sender instanceof Player) {

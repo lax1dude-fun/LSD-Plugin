@@ -43,5 +43,12 @@ public class TripManager implements Listener {
 			playersTripping.get(sender.getName()).dose(mcg);
 		}
 	}
+	
+	public int getDose(Player sender) {
+		if(playersTripping.containsKey(sender.getName())) {
+			return (int) playersTripping.get(sender.getName()).currentDose;
+		}
+		return 0;
+	}
 
 }
