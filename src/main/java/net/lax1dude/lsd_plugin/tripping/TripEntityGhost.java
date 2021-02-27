@@ -26,6 +26,9 @@ public class TripEntityGhost extends TripEntity {
 		if(posY < -1f) motionY = (trip.random.nextFloat()) * speed * 0.5f;
 		if(posZ > 5f) motionZ = (-trip.random.nextFloat()) * speed * 0.5f;
 		if(posZ < -5f) motionZ = (trip.random.nextFloat()) * speed * 0.5f;
+		motionX += (trip.random.nextFloat() - 0.5f) * 0.05f;
+		motionY += (trip.random.nextFloat() - 0.5f) * 0.05f;
+		motionZ += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createParticles(particle, true, posX + this.trip.player.getLocation().getX(), posY + this.trip.player.getLocation().getY(), posZ + this.trip.player.getLocation().getZ(), 0.0f, 0.0f, 0.0f, 0.0f, 1));
 		if(this.trip.random.nextInt(200) == 0) this.alive = false;
 	}

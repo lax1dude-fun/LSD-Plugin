@@ -19,13 +19,16 @@ import net.minecraft.server.v1_16_R3.MobEffectList;
 import net.minecraft.server.v1_16_R3.Packet;
 import net.minecraft.server.v1_16_R3.PacketDataSerializer;
 import net.minecraft.server.v1_16_R3.PacketPlayOutAbilities;
+import net.minecraft.server.v1_16_R3.PacketPlayOutEntity.PacketPlayOutEntityLook;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityEffect;
+import net.minecraft.server.v1_16_R3.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityTeleport;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityVelocity;
 import net.minecraft.server.v1_16_R3.PacketPlayOutRemoveEntityEffect;
 import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntity;
+import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_16_R3.PacketPlayOutUpdateHealth;
 import net.minecraft.server.v1_16_R3.PacketPlayOutWorldParticles;
 import net.minecraft.server.v1_16_R3.Particle;
@@ -155,6 +158,23 @@ public class PacketConstructors {
 		return new PacketPlayOutSpawnEntity(id, uuid, x, y, z, yaw, pitch, EntityTypes.a(type).get(), data, new Vec3D(motionx, motiony, motionz));
 	}
 	
+	public static PacketPlayOutSpawnEntityLiving createSpawnLivingEntity(int id, UUID uuid, String type, double x, double y, double z, float yaw, float pitch, float headpitch, int data, float motionx, float motiony, float motionz) {
+		PacketPlayOutSpawnEntityLiving ret = new PacketPlayOutSpawnEntityLiving();
+		setFieldI(ret, "a", id);
+		setField(ret, "b", uuid);
+		setFieldI(ret, "c", IRegistry.ENTITY_TYPE.a(EntityTypes.a(type).get()));
+		setFieldD(ret, "d", x);
+		setFieldD(ret, "e", y);
+		setFieldD(ret, "f", z);
+		setFieldI(ret, "g", (int) (motionx * 8000.0F));
+		setFieldI(ret, "h", (int) (motiony * 8000.0F));
+		setFieldI(ret, "i", (int) (motionz * 8000.0F));
+		setFieldB(ret, "j", (byte) ((int) (yaw * 256.0F / 360.0F)));
+		setFieldB(ret, "k", (byte) ((int) (pitch * 256.0F / 360.0F)));
+		setFieldB(ret, "l", (byte) ((int) (headpitch * 256.0F / 360.0F)));
+		return ret;
+	}
+	
 	public static PacketPlayOutEntityTeleport createMoveEntity(int id, double x, double y, double z, float yaw, float pitch) {
 		PacketPlayOutEntityTeleport ret = new PacketPlayOutEntityTeleport();
 		setFieldI(ret, "a", id);
@@ -190,6 +210,13 @@ public class PacketConstructors {
 	
 	public static PacketPlayOutEntityVelocity createEntityVelocity(int id, float x, float y, float z) {
 		return new PacketPlayOutEntityVelocity(id, new Vec3D(x, y, z));
+	}
+	
+	public static PacketPlayOutEntityHeadRotation createEntityLook(int id, float head) {
+		PacketPlayOutEntityHeadRotation ret = new PacketPlayOutEntityHeadRotation();
+		setFieldI(ret, "a", id);
+		setFieldB(ret, "b", (byte) ((int) (head * 256.0F / 360.0F)));
+		return ret;
 	}
 
 }

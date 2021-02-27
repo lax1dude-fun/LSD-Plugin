@@ -89,6 +89,9 @@ public class TripPlayer {
 				if(currentDose > 180f && timer % (random.nextInt((int)(300 / currentDose) + 1) + 1) == 0) {
 					this.addEntity(new TripEntityItem(this, 0.0D, 0.0D, 0.0D, PacketConstructors.getRandomItem(random), random.nextFloat() * 1.0f));
 				}
+				if(currentDose > 180f && timer % (random.nextInt((int)(30000 / currentDose) + 1) + 1) == 0) {
+					this.addEntity(new TripEntityLiving(this, (random.nextFloat() - 0.5f) * 6.0f, (random.nextFloat() - 0.5f) * 6.0f, (random.nextFloat() - 0.5f) * 6.0f, "creeper", random.nextFloat() * 1.0f));
+				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {
 				int particle;

@@ -30,9 +30,12 @@ public class TripEntityItem extends TripEntity {
 		if(posY < -1f) motionY = (trip.random.nextFloat()) * speed * 0.5f;
 		if(posZ > 5f) motionZ = (-trip.random.nextFloat()) * speed * 0.5f;
 		if(posZ < -5f) motionZ = (trip.random.nextFloat()) * speed * 0.5f;
+		motionX += (trip.random.nextFloat() - 0.5f) * 0.05f;
+		motionY += (trip.random.nextFloat() - 0.5f) * 0.05f;
+		motionZ += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id, posX + this.trip.player.getLocation().getX(), posY + this.trip.player.getLocation().getY(), posZ + this.trip.player.getLocation().getZ(), 0.0f, 0.0f));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityVelocity(-id, motionX, motionY, motionZ));
-		if(this.trip.random.nextInt(1000) == 0 || this.trip.currentDose < 150.0f) this.alive = false;
+		if(this.trip.random.nextInt(200) == 0 || this.trip.currentDose < 150.0f) this.alive = false;
 	}
 
 	@Override
