@@ -10,7 +10,8 @@
         "glass_bottle:673:ammonia",
         "glass_bottle:674:ergot_growth_medium",
         "apple:666:lemon",
-        "iron_nugget:666:pyrite"
+        "iron_nugget:666:pyrite",
+        "poisonous_potato:666:ergot_sclerotium"
     ],
     "out": "./LSD/assets/minecraft/models/item"
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -78,6 +79,18 @@ public class CraftingSystem implements Listener {
 					pyrite.setItemMeta(pyriteMeta);
 					breakEvent.setDropItems(false);					
 					world.dropItemNaturally(block.getLocation(), pyrite);
+				}
+			}
+		} else if (blockData.getMaterial() == Material.WHEAT) {
+			Ageable wheatData = (Ageable)blockData;
+			if (wheatData.getAge() == wheatData.getMaximumAge()) {
+				if (rand.nextFloat() > 0.999) {
+					ItemStack ergot = new ItemStack(Material.POISONOUS_POTATO);
+					ItemMeta ergotMeta = ergot.getItemMeta();
+					ergotMeta.setCustomModelData(666);
+					ergotMeta.setDisplayName(ChatColor.RESET + "Ergot Sclerotium");
+					ergot.setItemMeta(ergotMeta);			
+					world.dropItemNaturally(block.getLocation(), ergot);
 				}
 			}
 		}
