@@ -163,7 +163,13 @@ recipes:
             custom-model-data: 667
             meta-type: UNSPECIFIC
             display-name: '{"text":"Sulfuric Acid","italic":"false"}'
-      
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+
    ethanol:
       ingredients:
          1:
@@ -219,6 +225,12 @@ recipes:
             custom-model-data: 670
             meta-type: UNSPECIFIC
             display-name: '{"text":"Potassium Carbonate","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
       
    calcium-hydroxide:
       ingredients:
@@ -257,3 +269,9 @@ recipes:
             custom-model-data: 671
             meta-type: UNSPECIFIC
             display-name: '{"text":"Calcium Hydroxide","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1

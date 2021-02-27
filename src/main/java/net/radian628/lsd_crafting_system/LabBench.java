@@ -3,8 +3,10 @@ package net.radian628.lsd_crafting_system;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -145,8 +147,30 @@ public class LabBench implements Listener {
 			
 			ItemStack product = plugin.getConfig().getItemStack("recipes." + recipeName + ".product");
 			
+			String byproductsKey = "recipes." + recipeName + ".byproducts";
 			
-			return new LabBenchRecipe(requiredIngredients, product);
+			List<ItemStack> byproductsList = null;
+			ItemStack[] byproducts = null;
+			
+			
+			if (plugin.getConfig().isList(byproductsKey)) {
+				/*byproductsList = plugin.getConfig().getMapList(byproductsKey).stream().map(val -> ItemStack.deserialize((Map<String, Object>)val)).collect(Collectors.toList());
+
+				
+				ItemStack[] byproducts2 = new ItemStack[byproductsList.size()];
+				byproductsList.toArray(byproducts2);
+				byproducts = byproducts2;*/
+				
+				byproductsList = (List<ItemStack>)plugin.getConfig().get(byproductsKey);
+				byproducts = new ItemStack[byproductsList.size()];
+				byproductsList.toArray(byproducts);
+			}
+			
+			if (byproducts != null) {
+				plugin.getLogger().info("noticed byproducts actually exist and has size " + String.valueOf(byproducts.length));
+			}
+			
+			return new LabBenchRecipe(requiredIngredients, product, byproducts);
 			
 		} else {
 			return null;
@@ -177,6 +201,11 @@ public class LabBench implements Listener {
 					labInventory.setItem(25, result);
 				} else {
 					labInventory.setItem(25, recipe.product);
+				}
+				if (recipe.byproducts != null) {
+					for (ItemStack byproduct : recipe.byproducts) {
+						player.getInventory().addItem(byproduct);
+					}
 				}
 			}
 		} else {
