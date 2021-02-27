@@ -72,19 +72,22 @@ public class TripPlayer {
 				if(timer % (random.nextInt((int)(40000 / currentDose) + 1) + 1) == 0) {
 					givePotionEffect(16, 0, random.nextInt(5));
 				}
-				if(currentDose > 200f && timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
+				if(currentDose > 140f && timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
 					int particle;
 					do {
 						particle = random.nextInt(62);
 					}while(particle == 3 || particle == 14 || particle == 23 || particle == 32 || particle == 34 || particle == 21 || particle == 16 || particle == 22 || particle == 35 || particle == 42 || particle == 44 || particle == 46 || particle == 36 || particle == 56 || particle == 57 || particle == 2);
 					createParticlePlane(particle);
 				}
-				if(currentDose > 200f && timer % (random.nextInt((int)(1000 / currentDose) + 1) + 1) == 0) {
+				if(currentDose > 180f && timer % (random.nextInt((int)(1000 / currentDose) + 1) + 1) == 0) {
 					int particle;
 					do {
 						particle = random.nextInt(62);
 					}while(particle == 3 || particle == 14 || particle == 23 || particle == 32 || particle == 34 || particle == 21 || particle == 16 || particle == 22 || particle == 35 || particle == 42 || particle == 44 || particle == 46 || particle == 36 || particle == 2);
 					this.addEntity(new TripEntityGhost(this, 0.0D, 0.0D, 0.0D, particle, random.nextFloat() * 0.5f));
+				}
+				if(currentDose > 180f && timer % (random.nextInt((int)(300 / currentDose) + 1) + 1) == 0) {
+					this.addEntity(new TripEntityItem(this, 0.0D, 0.0D, 0.0D, PacketConstructors.getRandomItem(random), random.nextFloat() * 1.0f));
 				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {
