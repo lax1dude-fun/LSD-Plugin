@@ -1,0 +1,13 @@
+{
+    "models": [
+        "glass_bottle:666:citric_acid",
+        "glass_bottle:667:sulfuric_acid",
+        "glass_bottle:668:diethyl_ether",
+        "glass_bottle:669:ethanol",
+        "glass_bottle:670:potassium_carbonate",
+        "glass_bottle:671:calcium_hydroxide",
+        "apple:666:lemon",
+        "iron_nugget:666:pyrite"
+    ],
+    "out": "./LSD/assets/minecraft/models/item"
+}
