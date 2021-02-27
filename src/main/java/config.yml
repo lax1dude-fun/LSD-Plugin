@@ -191,3 +191,69 @@ recipes:
             custom-model-data: 669
             meta-type: UNSPECIFIC
             display-name: '{"text":"Ethanol","italic":"false"}'
+      
+   potash:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: OAK_LOG
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 670
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Potassium Carbonate","italic":"false"}'
+      
+   calcium-hydroxide:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: NAUTILUS_SHELL
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 671
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Calcium Hydroxide","italic":"false"}'

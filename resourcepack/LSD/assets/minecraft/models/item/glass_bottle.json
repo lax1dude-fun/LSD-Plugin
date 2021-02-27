@@ -28,6 +28,18 @@
                 "custom_model_data": 669
             },
             "model": "item/ethanol"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 670
+            },
+            "model": "item/potassium_carbonate"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 671
+            },
+            "model": "item/calcium_hydroxide"
         }
     ]
 }
