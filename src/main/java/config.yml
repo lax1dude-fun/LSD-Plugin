@@ -275,3 +275,138 @@ recipes:
             v: 2586
             type: BUCKET
             amount: 1
+      
+   potassium-hydroxide:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 670
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 671
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 672
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Potassium Hydroxide","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      
+   ammonia:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: COAL
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 673
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Ammonia","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+      
+   ergot_growth_medium:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 666
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 673
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: SUGAR
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WHEAT
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BONE_MEAL
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 674
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Ergot Growth Medium","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1

@@ -13,7 +13,49 @@ public class LabBenchRecipe {
 		byproducts = byprod;
 	}
 	
-	public boolean isCraftableWith(ItemStack[] ingredientsToTest) {
+	public boolean singleIngredientMatches(ItemStack ingredientToTest, ItemStack requiredIngredient) {
+		if (!(ingredientToTest == null ^ requiredIngredient == null)) {
+			if (ingredientToTest == null && requiredIngredient == null) {
+				return true;
+			} else if (ingredientToTest.getType() == requiredIngredient.getType()) {
+				if (!requiredIngredient.getItemMeta().hasCustomModelData() && !ingredientToTest.getItemMeta().hasCustomModelData()) {
+					return true;
+				} else if (requiredIngredient.getItemMeta().hasCustomModelData() && ingredientToTest.getItemMeta().hasCustomModelData()) {
+					if (requiredIngredient.getItemMeta().getCustomModelData() == ingredientToTest.getItemMeta().getCustomModelData()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean matches(ItemStack[] ingredientsToTest) {
+		for (int i = 0; 9 > i; i++) {
+			boolean ingredientMatches = singleIngredientMatches(ingredientsToTest[i], ingredients[i]);
+			/*if (!(ingredientsToTest[i] == null ^ ingredients[i] == null)) {
+				if (ingredientsToTest[i] == null && ingredients[i] == null) {
+					ingredientMatches = true;
+				} else if (ingredientsToTest[i].getType() == ingredients[i].getType()) {
+					if (!ingredients[i].getItemMeta().hasCustomModelData() && !ingredientsToTest[i].getItemMeta().hasCustomModelData()) {
+						ingredientMatches = true;
+					} else if (ingredients[i].getItemMeta().hasCustomModelData() && ingredientsToTest[i].getItemMeta().hasCustomModelData()) {
+						if (ingredients[i].getItemMeta().hasCustomModelData() == ingredientsToTest[i].getItemMeta().hasCustomModelData()) {
+							ingredientMatches = true;
+						}
+					}
+				}
+			}*/
+			
+			if (!ingredientMatches) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public boolean isCraftableWithAmounts(ItemStack[] ingredientsToTest) {
 		for (int i = 0; 9 > i; i++) {
 			if (ingredients[i] != null) {
 				if (ingredientsToTest[i] == null || ingredients[i].getAmount() > ingredientsToTest[i].getAmount()) {

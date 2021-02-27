@@ -25,6 +25,7 @@ public class LabBench implements Listener {
 	JavaPlugin plugin;
 	Player player;
 	Inventory labInventory;
+	ArrayList<LabBenchRecipe> recipes;
 	
 	public boolean isSlotEditable(int index) {
 
@@ -46,6 +47,7 @@ public class LabBench implements Listener {
 		plugin = javaPlugin;
 		player = user;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		recipes = new ArrayList<LabBenchRecipe>();
 		
 		labInventory = plugin.getServer().createInventory(null, 54, "Lab Bench");
 		
@@ -79,64 +81,24 @@ public class LabBench implements Listener {
 		}
 		
 		player.openInventory(labInventory);
+		
+		getAllRecipes();
 	}
 	
-	public LabBenchRecipe getMatchingRecipe(ItemStack[] ingredients) {
-		Map<String, Object> recipes = plugin.getConfig().getConfigurationSection("recipes").getValues(false);
-		
-		String recipeName = null;
-		
-		Iterator<Entry<String, Object>> recipeIterator = recipes.entrySet().iterator();
-		boolean recipeMatches = false;
+	public void getAllRecipes() {
+		recipes.clear();
+		Map<String, Object> recipesInConfig = plugin.getConfig().getConfigurationSection("recipes").getValues(false);
+
+		Iterator<Entry<String, Object>> recipeIterator = recipesInConfig.entrySet().iterator();
 		while (recipeIterator.hasNext()) {
-			
-			recipeMatches = true;
-			
 			Entry<String, Object> recipe = recipeIterator.next();
-			
-			recipeName = recipe.getKey();
+			String recipeName = recipe.getKey();
 			
 
-			String configKey = "recipes." + recipeName + ".ingredients";
-			Map<String, Object> requiredIngredients = plugin.getConfig().getConfigurationSection(configKey).getValues(true);
-			
-			for (int ii = 0; 9 > ii; ii++) {
-				
-				ItemStack requiredIngredient = (ItemStack)requiredIngredients.get(String.valueOf(ii));
-				
-				boolean ingredientMatches = false;
-				
-				if (!(ingredients[ii] == null ^ requiredIngredient == null)) {
-					if (ingredients[ii] == null && requiredIngredient == null) {
-						ingredientMatches = true;
-					} else if (ingredients[ii].getType() == requiredIngredient.getType()) {
-						if (!requiredIngredient.getItemMeta().hasCustomModelData() && !ingredients[ii].getItemMeta().hasCustomModelData()) {
-							ingredientMatches = true;
-						} else if (requiredIngredient.getItemMeta().hasCustomModelData() && ingredients[ii].getItemMeta().hasCustomModelData()) {
-							if (requiredIngredient.getItemMeta().hasCustomModelData() == ingredients[ii].getItemMeta().hasCustomModelData()) {
-								ingredientMatches = true;
-							}
-						}
-					}
-				}
-				
-				if (!ingredientMatches) {
-					recipeMatches = false;
-					break;
-				}
-			}
-			
-			if (recipeMatches) {
-				break;
-			}
-			
-		}
-		
-		if (recipeMatches && recipeName != null) {
+			String ingredientKey = "recipes." + recipeName + ".ingredients";
 			ItemStack[] requiredIngredients = new ItemStack[9];
-
-			String configKey = "recipes." + recipeName + ".ingredients";
-			Map<String, Object> requiredIngredientsFromConfig = plugin.getConfig().getConfigurationSection(configKey).getValues(true);
+	
+			Map<String, Object> requiredIngredientsFromConfig = plugin.getConfig().getConfigurationSection(ingredientKey).getValues(true);
 			
 			for (int i = 0; 9 > i; i++) {
 				
@@ -154,12 +116,6 @@ public class LabBench implements Listener {
 			
 			
 			if (plugin.getConfig().isList(byproductsKey)) {
-				/*byproductsList = plugin.getConfig().getMapList(byproductsKey).stream().map(val -> ItemStack.deserialize((Map<String, Object>)val)).collect(Collectors.toList());
-
-				
-				ItemStack[] byproducts2 = new ItemStack[byproductsList.size()];
-				byproductsList.toArray(byproducts2);
-				byproducts = byproducts2;*/
 				
 				byproductsList = (List<ItemStack>)plugin.getConfig().get(byproductsKey);
 				byproducts = new ItemStack[byproductsList.size()];
@@ -170,11 +126,25 @@ public class LabBench implements Listener {
 				plugin.getLogger().info("noticed byproducts actually exist and has size " + String.valueOf(byproducts.length));
 			}
 			
-			return new LabBenchRecipe(requiredIngredients, product, byproducts);
+			String shapelessKey = "recipes." + recipeName + ".shapeless";
 			
-		} else {
-			return null;
+			if (plugin.getConfig().isBoolean(shapelessKey) && plugin.getConfig().getBoolean(shapelessKey)) {
+				recipes.add(new ShapelessLabBenchRecipe(requiredIngredients, product, byproducts));
+			} else {
+				recipes.add(new LabBenchRecipe(requiredIngredients, product, byproducts));
+			}
 		}
+	}
+	
+	public LabBenchRecipe getMatchingRecipe(ItemStack[] ingredients) {
+		
+		for (int i = 0; recipes.size() > i; i++) {
+			if (recipes.get(i).matches(ingredients)) {
+				return recipes.get(i);
+			}
+		}
+		
+		return null;
 	}
 	
 	public void synthesize() {
@@ -193,7 +163,7 @@ public class LabBench implements Listener {
 		LabBenchRecipe recipe = getMatchingRecipe(ingredients);
 		
 		if (recipe != null) {
-			while (recipe.isCraftableWith(ingredients)) {
+			while (recipe.isCraftableWithAmounts(ingredients)) {
 				recipe.consume(ingredients, this);
 				ItemStack result = labInventory.getItem(25);
 				if (result != null && result.getType() == recipe.product.getType()) {
