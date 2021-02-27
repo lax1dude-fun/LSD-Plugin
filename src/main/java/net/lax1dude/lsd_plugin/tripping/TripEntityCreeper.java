@@ -3,12 +3,14 @@ package net.lax1dude.lsd_plugin.tripping;
 import java.util.UUID;
 
 public class TripEntityCreeper extends TripEntity {
-	
-	private float speed;
 
-	public TripEntityCreeper(TripPlayer trip, double x, double y, double z, float speed) {
+	private float speed;
+	private String entity;
+
+	public TripEntityCreeper(TripPlayer trip, double x, double y, double z, float speed, String entity) {
 		super(trip, x, y, z);
 		this.speed = speed;
+		this.entity = entity;
 	}
 	
 	private void recalculateMotion() {
@@ -24,16 +26,17 @@ public class TripEntityCreeper extends TripEntity {
 		posX += this.trip.player.getLocation().getX();
 		posZ += this.trip.player.getLocation().getZ();
 		posY = 1.0d + trip.player.getWorld().getHighestBlockYAt((int)Math.floor(posX), (int)Math.floor(posZ));
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createSpawnLivingEntity(-id, UUID.randomUUID(), "creeper", posX, posY, posZ, 0.0F, 0.0F, 0.0F, 0, 0.0F, 0.0F, 0.0F));
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createSpawnLivingEntity(-id, UUID.randomUUID(), entity, posX, posY, posZ, 0.0F, 0.0F, 0.0F, 0, 0.0F, 0.0F, 0.0F));
 		recalculateMotion();
 	}
 
 	@Override
 	public void tick() {
 		if(this.trip.random.nextInt(30) == 0) recalculateMotion();
-		motionX += (trip.random.nextFloat() - 0.5f) * 0.1f * speed;
-		motionY += (trip.random.nextFloat() - 0.5f) * 0.1f * speed;
-		motionZ += (trip.random.nextFloat() - 0.5f) * 0.1f * speed;
+		if(this.trip.random.nextInt(400) == 0) this.alive = false;
+		motionX += (trip.random.nextFloat() - 0.5f) * 0.2f * speed;
+		motionY += (trip.random.nextFloat() - 0.5f) * 0.2f * speed;
+		motionZ += (trip.random.nextFloat() - 0.5f) * 0.2f * speed;
 		posY = 1.0d + trip.player.getWorld().getHighestBlockYAt((int)Math.floor(posX), (int)Math.floor(posZ));
 		int dx = (int) (posX - this.trip.player.getLocation().getX());
 		int dz = (int) (posZ - this.trip.player.getLocation().getZ());

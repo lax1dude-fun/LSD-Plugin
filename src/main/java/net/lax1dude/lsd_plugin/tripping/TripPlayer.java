@@ -29,6 +29,7 @@ public class TripPlayer {
 		}else {
 			currentDose += mcg;
 		}
+		if(currentDose > 1000) currentDose = 1000;
 	}
 	
 	public void addEntity(TripEntity e) {
@@ -63,11 +64,11 @@ public class TripPlayer {
 					PacketConstructors.sendPacket(player, PacketConstructors.createHealthUpdate((float) (player.getHealth() - 0.1f), player.getFoodLevel(), player.getSaturation()));
 					PacketConstructors.sendPacket(player, PacketConstructors.createHealthUpdate((float) (player.getHealth()), player.getFoodLevel(), player.getSaturation()));
 				}
-				if(timer % (random.nextInt((int)(20000 / currentDose) + 1) + 1) == 0) {
-					givePotionEffect(9, 0, random.nextInt(Math.max(400 - (int)(currentDose / 3f), 150)));
-				}
-				if(timer % (random.nextInt((int)(2000 / currentDose) + 1) + 1) == 0) {
-					givePotionEffect(9, 0, random.nextInt(100) + 100);
+				//if(timer % (random.nextInt((int)(20000 / currentDose) + 1) + 1) == 0) {
+				//	givePotionEffect(9, 0, random.nextInt(Math.max(400 - (int)(currentDose / 3f), 200)));
+				//}
+				if(timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
+					givePotionEffect(9, 0, random.nextInt(200) + 100);
 				}
 				if(timer % (random.nextInt((int)(40000 / currentDose) + 1) + 1) == 0) {
 					givePotionEffect(16, 0, random.nextInt(5));
@@ -78,6 +79,10 @@ public class TripPlayer {
 						particle = random.nextInt(62);
 					}while(particle == 3 || particle == 14 || particle == 23 || particle == 32 || particle == 34 || particle == 21 || particle == 16 || particle == 22 || particle == 35 || particle == 42 || particle == 44 || particle == 46 || particle == 36 || particle == 56 || particle == 57 || particle == 2);
 					createParticlePlane(particle);
+				}
+				if(currentDose > 140f && timer % (random.nextInt((int)(10000 / currentDose) + 1) + 1) == 0) {
+					String[] mobTable = new String[] {"donkey", "mule", "bat", "pig", "pig", "pig", "pig", "pig", "sheep", "sheep", "sheep", "cow", "cow", "cow", "chicken", "chicken", "squid", "wolf", "mooshroom", "mooshroom", "mooshroom", "mooshroom", "ocelot", "horse", "llama", "villager", "villager"};
+					this.addEntity(new TripEntityFlyingMob(this, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 16.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.5f, mobTable[random.nextInt(mobTable.length)]));
 				}
 				if(currentDose > 180f && timer % (random.nextInt((int)(1000 / currentDose) + 1) + 1) == 0) {
 					int particle;
@@ -90,7 +95,12 @@ public class TripPlayer {
 					this.addEntity(new TripEntityItem(this, 0.0D, 0.0D, 0.0D, PacketConstructors.getRandomItem(random), random.nextFloat() * 1.0f));
 				}
 				if(currentDose > 180f && timer % (random.nextInt((int)(3000 / currentDose) + 1) + 1) == 0) {
-					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f));
+					String[] mobTable = new String[] {"creeper", "creeper", "creeper", "creeper", "creeper", "creeper", "creeper", "zombie", "skeleton", "enderman", "spider", "witch", "guardian", "vex", "silverfish"};
+					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
+				}
+				if(currentDose > 220f && timer % (random.nextInt((int)(5000 / currentDose) + 1) + 1) == 0) {
+					String[] mobTable = new String[] {"donkey", "mule", "bat", "pig", "pig", "pig", "pig", "pig", "sheep", "sheep", "sheep", "cow", "cow", "cow", "chicken", "chicken", "squid", "wolf", "mooshroom", "mooshroom", "mooshroom", "mooshroom", "ocelot", "horse", "llama", "villager", "villager"};
+					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
 				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {
