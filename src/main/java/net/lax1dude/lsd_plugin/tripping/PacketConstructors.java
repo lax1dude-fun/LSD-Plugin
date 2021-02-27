@@ -5,12 +5,17 @@ import java.lang.reflect.Field;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import net.minecraft.server.v1_16_R3.IRegistry;
 import net.minecraft.server.v1_16_R3.MobEffectList;
 import net.minecraft.server.v1_16_R3.Packet;
+import net.minecraft.server.v1_16_R3.PacketDataSerializer;
 import net.minecraft.server.v1_16_R3.PacketPlayOutAbilities;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityEffect;
 import net.minecraft.server.v1_16_R3.PacketPlayOutRemoveEntityEffect;
 import net.minecraft.server.v1_16_R3.PacketPlayOutUpdateHealth;
+import net.minecraft.server.v1_16_R3.PacketPlayOutWorldParticles;
+import net.minecraft.server.v1_16_R3.Particle;
+import net.minecraft.server.v1_16_R3.ParticleParam;
 
 public class PacketConstructors {
 	
@@ -98,6 +103,26 @@ public class PacketConstructors {
 		setFieldI(ret, "a", entity);
 		setField(ret, "b", MobEffectList.fromId(effect));
 		return ret;
+	}
+	
+	public static PacketPlayOutWorldParticles createParticles(int particleType, boolean distance, double x, double y, double z, float sx, float sy, float sz, float data, int count) {
+		return new PacketPlayOutWorldParticles(new ParticleParam() {
+			
+			@Override
+			public Particle<?> getParticle() {
+				return IRegistry.PARTICLE_TYPE.fromId(particleType);
+			}
+			
+			@Override
+			public void a(PacketDataSerializer paramPacketDataSerializer) {
+			}
+			
+			@Override
+			public String a() {
+				return IRegistry.PARTICLE_TYPE.fromId(particleType).toString();
+			}
+			
+		}, distance, x, y, z, sx, sy, sz, data, count);
 	}
 
 }

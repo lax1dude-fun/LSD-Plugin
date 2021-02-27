@@ -57,6 +57,7 @@ public class PluginMain extends JavaPlugin {
 							}else if(args.length == 2) {
 								if(sender instanceof Player) {
 									tripMgr.dose((Player)sender, mcg);
+									sender.sendMessage("You have been dosed");
 								}
 							}
 						}catch(Throwable t) {

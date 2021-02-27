@@ -47,6 +47,13 @@ public class TripPlayer {
 					givePotionEffect(16, 0, random.nextInt(5));
 				}
 			}
+			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {
+				int particle;
+				do {
+					particle = random.nextInt(62);
+				}while(particle == 3 || particle == 14 || particle == 23 || particle == 32 || particle == 34 || particle == 21);
+				PacketConstructors.sendPacket(player, PacketConstructors.createParticles(particle, true, player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 2.0f, 2.0f, 2.0f, 1.0f, 2));
+			}
 			if(timer % (random.nextInt((int)(3000 / currentDose)) + 1) == 0) {
 				PacketConstructors.sendPacket(player, PacketConstructors.createPlayerAbilities(player.isInvulnerable(), player.isFlying(), player.getAllowFlight(), player.getGameMode() == GameMode.CREATIVE,
 						0.05f, (random.nextFloat() - 0.5f) * (currentDose / 2000000f) * (1.0f + getPlayerVelocity(player) * 400.0f) + 0.1f));
