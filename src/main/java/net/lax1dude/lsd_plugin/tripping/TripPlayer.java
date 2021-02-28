@@ -6,6 +6,7 @@ import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import net.lax1dude.lsd_plugin.PluginMain;
 
@@ -157,6 +158,9 @@ public class TripPlayer {
 			if(currentDose > 200f && timer % (random.nextInt((int)(120000 / currentDose) + 1) + 1) == 0) {
 				PacketConstructors.sendPacket(player, PacketConstructors.createPlayerAbilities(player.isInvulnerable(), player.isFlying(), player.getAllowFlight(), player.getGameMode() == GameMode.CREATIVE,
 						0.05f, (random.nextFloat() - 0.5f) * (currentDose / 6000f) * (1.0f + getPlayerVelocity(player) * 20.0f) + 0.1f));
+			}
+			if(timer % (random.nextInt((int)(10000 / currentDose) + 1) + 1) == 0) {
+				player.playSound(player.getLocation().add(new Vector((random.nextFloat() - 0.5f) * 4.0f, (random.nextFloat() - 0.5f) * 4.0f, (random.nextFloat() - 0.5f) * 4.0f)), "ambient.cave", currentDose * 0.0005f * (1.0f + random.nextFloat() * 0.3f), random.nextFloat() * 3.0f + 0.5f);
 			}
 		}
 		
