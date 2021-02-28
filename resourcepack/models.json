@@ -24,7 +24,7 @@
         "apple:666:lemon",
         "iron_nugget:666:pyrite",
         "poisonous_potato:666:ergot_sclerotium",
-        "book:1337:tihkal"
+        "filled_map:666:tihkal"
     ],
     "out": "./LSD/assets/minecraft/models/item"
 }
