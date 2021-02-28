@@ -6,11 +6,13 @@ public class LabBenchRecipe {
 	ItemStack[] ingredients;
 	ItemStack product;
 	ItemStack[] byproducts;
+	String name;
 	
-	public LabBenchRecipe(ItemStack[] ing, ItemStack prod, ItemStack[] byprod) {
+	public LabBenchRecipe(ItemStack[] ing, ItemStack prod, ItemStack[] byprod, String recipeName) {
 		ingredients = ing;
 		product = prod;
 		byproducts = byprod;
+		name = recipeName;
 	}
 	
 	public boolean singleIngredientMatches(ItemStack ingredientToTest, ItemStack requiredIngredient) {

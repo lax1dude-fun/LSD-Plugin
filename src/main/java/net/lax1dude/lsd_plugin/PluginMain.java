@@ -70,6 +70,12 @@ public class PluginMain extends JavaPlugin {
 					if(sender instanceof Player) {
 						craftingSystem.openLab((Player)sender);
 					}
+				} else if (args[0].equalsIgnoreCase("viewrecipe")) {
+					if (sender instanceof Player && args.length == 2) {
+						craftingSystem.displayRecipe((Player)sender, args[1]);
+					} else {
+						sender.sendMessage("Usage: /lsdplugin viewrecipe <product-name-in-kebab-case>");
+					}
 				}
 			}
 			return true;

@@ -3,8 +3,8 @@ package net.radian628.lsd_crafting_system;
 import org.bukkit.inventory.ItemStack;
 
 public class ShapelessLabBenchRecipe extends LabBenchRecipe {
-	public ShapelessLabBenchRecipe(ItemStack[] ing, ItemStack prod, ItemStack[] byprod) {
-		super(ing, prod, byprod);
+	public ShapelessLabBenchRecipe(ItemStack[] ing, ItemStack prod, ItemStack[] byprod, String recipeName) {
+		super(ing, prod, byprod, recipeName);
 	}
 	
 	@Override

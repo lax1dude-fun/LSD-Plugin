@@ -1,6 +1,11 @@
 package net.radian628.lsd_crafting_system;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -23,16 +28,88 @@ public class CraftingSystem implements Listener {
 	
 	JavaPlugin plugin;
 	Random rand;
+	ArrayList<LabBenchRecipe> recipes;
 	
 	public CraftingSystem(JavaPlugin javaPlugin) {
 		rand = new Random();
 		plugin = javaPlugin;
 		plugin.getLogger().info("test");
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		recipes = new ArrayList<LabBenchRecipe>();
+		getAllRecipes();
+	}
+	
+
+	public void getAllRecipes() {
+		recipes.clear();
+		Map<String, Object> recipesInConfig = plugin.getConfig().getConfigurationSection("recipes").getValues(false);
+
+		Iterator<Entry<String, Object>> recipeIterator = recipesInConfig.entrySet().iterator();
+		while (recipeIterator.hasNext()) {
+			Entry<String, Object> recipe = recipeIterator.next();
+			String recipeName = recipe.getKey();
+			
+
+			String ingredientKey = "recipes." + recipeName + ".ingredients";
+			ItemStack[] requiredIngredients = new ItemStack[9];
+	
+			Map<String, Object> requiredIngredientsFromConfig = plugin.getConfig().getConfigurationSection(ingredientKey).getValues(true);
+			
+			for (int i = 0; 9 > i; i++) {
+				
+				ItemStack requiredIngredient = (ItemStack)requiredIngredientsFromConfig.get(String.valueOf(i));
+			
+				requiredIngredients[i] = requiredIngredient;
+			}
+			
+			ItemStack product = plugin.getConfig().getItemStack("recipes." + recipeName + ".product");
+			
+			String byproductsKey = "recipes." + recipeName + ".byproducts";
+			
+			List<ItemStack> byproductsList = null;
+			ItemStack[] byproducts = null;
+			
+			
+			if (plugin.getConfig().isList(byproductsKey)) {
+				
+				byproductsList = (List<ItemStack>)plugin.getConfig().get(byproductsKey);
+				byproducts = new ItemStack[byproductsList.size()];
+				byproductsList.toArray(byproducts);
+			}
+			
+			if (byproducts != null) {
+				plugin.getLogger().info("noticed byproducts actually exist and has size " + String.valueOf(byproducts.length));
+			}
+			
+			String shapelessKey = "recipes." + recipeName + ".shapeless";
+			
+			if (plugin.getConfig().isBoolean(shapelessKey) && plugin.getConfig().getBoolean(shapelessKey)) {
+				recipes.add(new ShapelessLabBenchRecipe(requiredIngredients, product, byproducts, recipeName));
+			} else {
+				recipes.add(new LabBenchRecipe(requiredIngredients, product, byproducts, recipeName));
+			}
+		}
 	}
 	
 	public void openLab(Player player) {
-		new LabBench(plugin, player);
+		new LabBench(plugin, player, recipes);
+	}
+	
+	public void displayRecipe(Player player, String recipeName) {
+		LabBenchRecipe chosenRecipe = null;
+		for (LabBenchRecipe recipe : recipes) {
+			
+			if (recipe.name.equalsIgnoreCase(recipeName)) {
+				chosenRecipe = recipe;
+				break;
+			}
+		}
+		
+		if (chosenRecipe != null) {
+			new LabBenchRecipeDisplayer(plugin, player, chosenRecipe);
+		} else {
+			player.sendMessage(ChatColor.RED + "No lab bench recipe for '" + recipeName + "' found.");
+		}
 	}
 	
 	public void handleCustomBlockDrop(Block block, Player blockBreaker, BlockBreakEvent breakEvent) {

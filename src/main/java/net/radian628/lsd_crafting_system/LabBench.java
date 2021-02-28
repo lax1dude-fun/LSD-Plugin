@@ -43,11 +43,11 @@ public class LabBench implements Listener {
 		return (new int[]{ 12, 13, 14, 21, 22, 23, 30, 31, 32 })[index];
 	}
 	
-	public LabBench(JavaPlugin javaPlugin, Player user) {
+	public LabBench(JavaPlugin javaPlugin, Player user, ArrayList<LabBenchRecipe> allRecipes) {
 		plugin = javaPlugin;
 		player = user;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		recipes = new ArrayList<LabBenchRecipe>();
+		recipes = allRecipes;
 		
 		labInventory = plugin.getServer().createInventory(null, 54, "Lab Bench");
 		
@@ -81,60 +81,8 @@ public class LabBench implements Listener {
 		}
 		
 		player.openInventory(labInventory);
-		
-		getAllRecipes();
 	}
 	
-	public void getAllRecipes() {
-		recipes.clear();
-		Map<String, Object> recipesInConfig = plugin.getConfig().getConfigurationSection("recipes").getValues(false);
-
-		Iterator<Entry<String, Object>> recipeIterator = recipesInConfig.entrySet().iterator();
-		while (recipeIterator.hasNext()) {
-			Entry<String, Object> recipe = recipeIterator.next();
-			String recipeName = recipe.getKey();
-			
-
-			String ingredientKey = "recipes." + recipeName + ".ingredients";
-			ItemStack[] requiredIngredients = new ItemStack[9];
-	
-			Map<String, Object> requiredIngredientsFromConfig = plugin.getConfig().getConfigurationSection(ingredientKey).getValues(true);
-			
-			for (int i = 0; 9 > i; i++) {
-				
-				ItemStack requiredIngredient = (ItemStack)requiredIngredientsFromConfig.get(String.valueOf(i));
-			
-				requiredIngredients[i] = requiredIngredient;
-			}
-			
-			ItemStack product = plugin.getConfig().getItemStack("recipes." + recipeName + ".product");
-			
-			String byproductsKey = "recipes." + recipeName + ".byproducts";
-			
-			List<ItemStack> byproductsList = null;
-			ItemStack[] byproducts = null;
-			
-			
-			if (plugin.getConfig().isList(byproductsKey)) {
-				
-				byproductsList = (List<ItemStack>)plugin.getConfig().get(byproductsKey);
-				byproducts = new ItemStack[byproductsList.size()];
-				byproductsList.toArray(byproducts);
-			}
-			
-			if (byproducts != null) {
-				plugin.getLogger().info("noticed byproducts actually exist and has size " + String.valueOf(byproducts.length));
-			}
-			
-			String shapelessKey = "recipes." + recipeName + ".shapeless";
-			
-			if (plugin.getConfig().isBoolean(shapelessKey) && plugin.getConfig().getBoolean(shapelessKey)) {
-				recipes.add(new ShapelessLabBenchRecipe(requiredIngredients, product, byproducts));
-			} else {
-				recipes.add(new LabBenchRecipe(requiredIngredients, product, byproducts));
-			}
-		}
-	}
 	
 	public LabBenchRecipe getMatchingRecipe(ItemStack[] ingredients) {
 		
