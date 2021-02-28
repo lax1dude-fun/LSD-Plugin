@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import net.minecraft.server.v1_16_R3.Block;
 import net.minecraft.server.v1_16_R3.DataWatcher.Item;
 import net.minecraft.server.v1_16_R3.DataWatcherObject;
 import net.minecraft.server.v1_16_R3.DataWatcherRegistry;
@@ -200,6 +202,14 @@ public class PacketConstructors {
 	
 	public static String getRandomItem(Random r) {
 		return RegistryBlocks.ITEM.a(r).toString();
+	}
+	
+	public static int getRandomBlock(Random r) {
+		int i;
+		do {
+			i = r.nextInt(300);
+		}while(Block.REGISTRY_ID.fromId(i) == null);
+		return i;
 	}
 	
 	public static PacketPlayOutEntityMetadata createEntityDataSlot(int id, int slot, String item) {

@@ -123,6 +123,9 @@ public class TripPlayer {
 					}while(particle == 3 || particle == 14 || particle == 23 || particle == 32 || particle == 34 || particle == 21 || particle == 16 || particle == 22 || particle == 35 || particle == 42 || particle == 44 || particle == 46 || particle == 36 || particle == 2);
 					this.addEntity(new TripEntityGhost(this, 0.0D, 0.0D, 0.0D, particle, random.nextFloat() * 0.5f));
 				}
+				if(currentDose > 220f && timer % (random.nextInt((int)(6000 / currentDose) + 1) + 1) == 0) {
+					this.addEntity(new TripEntityGhostBlock(this, player.getLocation().getX() + (random.nextFloat() - 0.5f) * 32.0f, 0.0f, player.getLocation().getZ() + (random.nextFloat() - 0.5f) * 32.0f, PacketConstructors.getRandomBlock(random), 0));
+				}
 				if(currentDose > 180f && timer % (random.nextInt((int)(300 / currentDose) + 1) + 1) == 0) {
 					this.addEntity(new TripEntityItem(this, 0.0D, 0.0D, 0.0D, PacketConstructors.getRandomItem(random), random.nextFloat() * 1.0f));
 				}
