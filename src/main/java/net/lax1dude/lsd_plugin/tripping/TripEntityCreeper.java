@@ -46,7 +46,7 @@ public class TripEntityCreeper extends TripEntity {
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, yaw));
 		if(dx < 1.0f && dx > -1.0f && dz < 1.0f && dz > -1.0f) {
 			this.alive = false;
-			PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createParticles(22, true, posX, posY + 1.0D, posZ, 0.2f, 0.2f, 0.2f, 0.0f, 3));
+			PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createParticles(15, true, posX, posY + 1.0D, posZ, 0.2f, 0.2f, 0.2f, 0.0f, 5));
 		}
 	}
 

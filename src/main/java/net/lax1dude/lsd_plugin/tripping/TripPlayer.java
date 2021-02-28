@@ -10,11 +10,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.lax1dude.lsd_plugin.PluginMain;
 
 public class TripPlayer {
-	
+
 	public float currentDose = 0.0f;
+	public float prevDose = 0.0f;
 	public final Player player;
 	public final Random random;
 	public int timer = 0;
+	
+	public enum CameraMode {
+		NONE, CREEPER, SPIDER, ENDERMAN
+	}
+	
+	public CameraMode currentCameraMode = CameraMode.NONE;
+	public TripEntity currentCameraMob = null;
 	
 	public final ArrayList<TripEntity> entities = new ArrayList();
 
@@ -47,6 +55,22 @@ public class TripPlayer {
 	public void tick() {
 		currentDose *= 0.99986138f;
 		timer += 1;
+
+		if(currentDose < 80.0f && prevDose >= 80.0f) {
+			PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorderWarn(TripPlayer.this.player.getWorld().getWorldBorder().getWarningDistance()));
+		}
+		
+		if(currentDose >= 80.0f && prevDose < 80.0f) {
+			PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorderWarn((int)TripPlayer.this.player.getWorld().getWorldBorder().getSize()));
+		}
+
+		if(currentDose < 210.0f && prevDose >= 210.0f) {
+			PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorder(TripPlayer.this.player.getWorld().getWorldBorder().getSize()));
+		}
+		
+		if(currentDose >= 210.0f && prevDose < 210.0f) {
+			PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorder(0.0D));
+		}
 		
 		ArrayList<TripEntity> entitiesToTick = new ArrayList();
 		entitiesToTick.addAll(entities);
@@ -64,15 +88,23 @@ public class TripPlayer {
 					PacketConstructors.sendPacket(player, PacketConstructors.createHealthUpdate((float) (player.getHealth() - 0.1f), player.getFoodLevel(), player.getSaturation()));
 					PacketConstructors.sendPacket(player, PacketConstructors.createHealthUpdate((float) (player.getHealth()), player.getFoodLevel(), player.getSaturation()));
 				}
-				//if(timer % (random.nextInt((int)(20000 / currentDose) + 1) + 1) == 0) {
-				//	givePotionEffect(9, 0, random.nextInt(Math.max(400 - (int)(currentDose / 3f), 200)));
-				//}
 				if(timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
 					givePotionEffect(9, 0, random.nextInt(200) + 100);
 				}
 				if(timer % (random.nextInt((int)(40000 / currentDose) + 1) + 1) == 0) {
 					givePotionEffect(16, 0, random.nextInt(5));
 				}
+				/*
+				if(timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
+					switchCameraMode(CameraMode.SPIDER);
+					(new BukkitRunnable() {
+						@Override
+						public void run() {
+							switchCameraMode(CameraMode.NONE);
+						}	
+					}).runTaskLater(PluginMain.instance, random.nextInt(40));
+				}
+				*/
 				if(currentDose > 140f && timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
 					int particle;
 					do {
@@ -94,13 +126,18 @@ public class TripPlayer {
 				if(currentDose > 180f && timer % (random.nextInt((int)(300 / currentDose) + 1) + 1) == 0) {
 					this.addEntity(new TripEntityItem(this, 0.0D, 0.0D, 0.0D, PacketConstructors.getRandomItem(random), random.nextFloat() * 1.0f));
 				}
-				if(currentDose > 180f && timer % (random.nextInt((int)(3000 / currentDose) + 1) + 1) == 0) {
+				if(currentDose > 180f && timer % (random.nextInt((int)(6000 / currentDose) + 1) + 1) == 0) {
 					String[] mobTable = new String[] {"creeper", "creeper", "creeper", "creeper", "creeper", "creeper", "creeper", "zombie", "skeleton", "enderman", "spider", "witch", "guardian", "vex", "silverfish"};
 					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
 				}
-				if(currentDose > 220f && timer % (random.nextInt((int)(5000 / currentDose) + 1) + 1) == 0) {
-					String[] mobTable = new String[] {"donkey", "mule", "bat", "pig", "pig", "pig", "pig", "pig", "sheep", "sheep", "sheep", "cow", "cow", "cow", "chicken", "chicken", "squid", "wolf", "mooshroom", "mooshroom", "mooshroom", "mooshroom", "ocelot", "horse", "llama", "villager", "villager"};
+				if(currentDose > 220f && timer % (random.nextInt((int)(10000 / currentDose) + 1) + 1) == 0) {
+					String[] mobTable = new String[] {"donkey", "mule", "bat", "pig", "pig", "pig", "pig", "pig", "sheep", "sheep", "sheep", "cow", "cow", "cow", "chicken", "chicken", "squid", "wolf", "mooshroom", "mooshroom", "mooshroom", "mooshroom", "ocelot", "horse", "llama", "villager", "villager", "turtle"};
 					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
+				}
+				if(currentDose > 260f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
+					String[] mobTable = new String[] {"creeper", "enderman", "spider", "skeleton"};
+					this.addEntity(new TripEntityExternalCamera(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
+				
 				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {
@@ -119,6 +156,8 @@ public class TripPlayer {
 						0.05f, (random.nextFloat() - 0.5f) * (currentDose / 6000f) * (1.0f + getPlayerVelocity(player) * 20.0f) + 0.1f));
 			}
 		}
+		
+		prevDose = currentDose;
 	}
 	
 	private void createParticlePlane(int p) {
@@ -159,6 +198,39 @@ public class TripPlayer {
 	
 	private static float getPlayerVelocity(Player p) {
 		return (float) p.getVelocity().length();
+	}
+	
+	public void switchCameraMode(CameraMode next) {
+		if(next != currentCameraMode) {
+			switch(currentCameraMode) {
+			case CREEPER:
+			case ENDERMAN:
+			case SPIDER:
+				currentCameraMob.alive = false;
+				currentCameraMob = null;
+				PacketConstructors.sendPacket(player, PacketConstructors.createCamera(player.getEntityId()));
+				PacketConstructors.sendPacket(player, PacketConstructors.createRemoveEntityEffect(player.getEntityId(), (byte) 14));
+				break;
+			case NONE:
+			default:
+				break;
+			}
+			currentCameraMode = next;
+			switch(currentCameraMode) {
+			case CREEPER:
+			case ENDERMAN:
+			case SPIDER:
+				currentCameraMob = new TripEntityCamera(this, currentCameraMode);
+				addEntity(currentCameraMob);
+				PacketConstructors.sendPacket(player, PacketConstructors.createCamera(-currentCameraMob.id));
+				PacketConstructors.sendPacket(player, PacketConstructors.createEntityEffect(player.getEntityId(), (byte) 14, (byte) 0, 31000, (byte) 0x02));
+				break;
+			case NONE:
+			default:
+				PacketConstructors.sendPacket(player, PacketConstructors.createCamera(player.getEntityId()));
+				break;
+			}
+		}
 	}
 
 }

@@ -19,7 +19,7 @@ import net.minecraft.server.v1_16_R3.MobEffectList;
 import net.minecraft.server.v1_16_R3.Packet;
 import net.minecraft.server.v1_16_R3.PacketDataSerializer;
 import net.minecraft.server.v1_16_R3.PacketPlayOutAbilities;
-import net.minecraft.server.v1_16_R3.PacketPlayOutEntity.PacketPlayOutEntityLook;
+import net.minecraft.server.v1_16_R3.PacketPlayOutCamera;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityEffect;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityHeadRotation;
@@ -30,6 +30,8 @@ import net.minecraft.server.v1_16_R3.PacketPlayOutRemoveEntityEffect;
 import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntity;
 import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_16_R3.PacketPlayOutUpdateHealth;
+import net.minecraft.server.v1_16_R3.PacketPlayOutWorldBorder;
+import net.minecraft.server.v1_16_R3.PacketPlayOutWorldBorder.EnumWorldBorderAction;
 import net.minecraft.server.v1_16_R3.PacketPlayOutWorldParticles;
 import net.minecraft.server.v1_16_R3.Particle;
 import net.minecraft.server.v1_16_R3.ParticleParam;
@@ -216,6 +218,26 @@ public class PacketConstructors {
 		PacketPlayOutEntityHeadRotation ret = new PacketPlayOutEntityHeadRotation();
 		setFieldI(ret, "a", id);
 		setFieldB(ret, "b", (byte) ((int) (head * 256.0F / 360.0F)));
+		return ret;
+	}
+	
+	public static PacketPlayOutWorldBorder createWorldBorder(double diameter) {
+		PacketPlayOutWorldBorder ret = new PacketPlayOutWorldBorder();
+		setField(ret, "a", EnumWorldBorderAction.SET_SIZE);
+		setFieldD(ret, "e", diameter);
+		return ret;
+	}
+	
+	public static PacketPlayOutWorldBorder createWorldBorderWarn(int diameter) {
+		PacketPlayOutWorldBorder ret = new PacketPlayOutWorldBorder();
+		setField(ret, "a", EnumWorldBorderAction.SET_WARNING_BLOCKS);
+		setFieldI(ret, "i", diameter);
+		return ret;
+	}
+	
+	public static PacketPlayOutCamera createCamera(int id) {
+		PacketPlayOutCamera ret = new PacketPlayOutCamera();
+		setFieldI(ret, "a", id);
 		return ret;
 	}
 
