@@ -15,9 +15,11 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -96,17 +98,17 @@ public class CraftingSystem implements Listener {
 	}
 	
 	public void displayRecipe(Player player, String recipeName) {
-		LabBenchRecipe chosenRecipe = null;
-		for (LabBenchRecipe recipe : recipes) {
-			
+		int chosenRecipeIndex = -1;
+		for (int i = 0; recipes.size() > i; i++) {
+			LabBenchRecipe recipe = recipes.get(i);
 			if (recipe.name.equalsIgnoreCase(recipeName)) {
-				chosenRecipe = recipe;
+				chosenRecipeIndex = i;
 				break;
 			}
 		}
 		
-		if (chosenRecipe != null) {
-			new LabBenchRecipeDisplayer(plugin, player, chosenRecipe);
+		if (chosenRecipeIndex != -1) {
+			new LabBenchRecipeDisplayer(plugin, player, recipes, chosenRecipeIndex);
 		} else {
 			player.sendMessage(ChatColor.RED + "No lab bench recipe for '" + recipeName + "' found.");
 		}
@@ -181,5 +183,15 @@ public class CraftingSystem implements Listener {
 	@EventHandler
 	public void onLeavesDecay(LeavesDecayEvent event) {
 		handleCustomBlockDrop(event.getBlock(), null, null);
+	}
+	
+	@EventHandler(priority=EventPriority.HIGH)
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		ItemStack heldItem = event.getItem();
+		ItemMeta heldItemMeta = heldItem.getItemMeta();
+		
+		if (heldItem != null && heldItem.getType() == Material.BOOK && heldItemMeta.hasCustomModelData() && heldItemMeta.getCustomModelData() == 1337) {
+			displayRecipe(event.getPlayer(), "lsd");
+		}
 	}
 }

@@ -25,7 +25,8 @@ public class LabBenchRecipeDisplayer implements Listener {
 	JavaPlugin plugin;
 	Player player;
 	Inventory labInventory;
-	LabBenchRecipe recipe;
+	ArrayList<LabBenchRecipe> recipes;
+	int recipeIndex;
 	
 	public boolean isSlotEditable(int index) {
 
@@ -43,11 +44,12 @@ public class LabBenchRecipeDisplayer implements Listener {
 		return (new int[]{ 12, 13, 14, 21, 22, 23, 30, 31, 32 })[index];
 	}
 	
-	public LabBenchRecipeDisplayer(JavaPlugin javaPlugin, Player user, LabBenchRecipe selectedRecipe) {
+	public LabBenchRecipeDisplayer(JavaPlugin javaPlugin, Player user, ArrayList<LabBenchRecipe> selectedRecipes, int indexOfRecipe) {
 		plugin = javaPlugin;
 		player = user;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		recipe = selectedRecipe;
+		recipes = selectedRecipes;
+		recipeIndex = indexOfRecipe;
 		
 		labInventory = plugin.getServer().createInventory(null, 54, "Lab Bench");
 		
@@ -61,7 +63,7 @@ public class LabBenchRecipeDisplayer implements Listener {
 				if (isSlotEditable(index)) {
 					mat = Material.AIR;
 				} else {
-					if (index == 40) {
+					if (index == 9 || index == 17) {
 						mat = Material.GLASS_BOTTLE;
 					} else {
 						mat = Material.WHITE_STAINED_GLASS_PANE;
@@ -70,8 +72,11 @@ public class LabBenchRecipeDisplayer implements Listener {
 				
 				ItemStack item = new ItemStack(mat);
 				meta = item.getItemMeta();
-				if (index == 40) {
-					meta.setDisplayName("Click to Synthesize All");
+				if (index == 9) {
+					meta.setDisplayName("Previous Recipe");
+				}
+				if (index == 17) {
+					meta.setDisplayName("Next Recipe");
 				}
 				
 				item.setItemMeta(meta);
@@ -82,13 +87,13 @@ public class LabBenchRecipeDisplayer implements Listener {
 		
 		for (int i = 0; 9 > i; i++) {
 			int index = getEditableSlotIndex(i);
-			ItemStack ingredient = recipe.ingredients[i];
+			ItemStack ingredient = recipes.get(recipeIndex).ingredients[i];
 			if (ingredient != null) {
 				labInventory.setItem(index, ingredient);
 			}
 		}
 		
-		labInventory.setItem(25, recipe.product);
+		labInventory.setItem(25, recipes.get(recipeIndex).product);
 		
 		player.openInventory(labInventory);
 	}
@@ -96,6 +101,14 @@ public class LabBenchRecipeDisplayer implements Listener {
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getClickedInventory() == labInventory) {
+
+			if (event.getSlot() == 9) {
+				player.closeInventory();
+				new LabBenchRecipeDisplayer(plugin, player, recipes, (recipeIndex + recipes.size() - 1) % recipes.size());
+			} else if (event.getSlot() == 17) {
+				player.closeInventory();
+				new LabBenchRecipeDisplayer(plugin, player, recipes, (recipeIndex + recipes.size() + 1) % recipes.size());
+			}
 			
 			event.setCancelled(true);
 			

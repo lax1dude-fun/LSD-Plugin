@@ -23,7 +23,8 @@
         "glass_bottle:686:lsd",
         "apple:666:lemon",
         "iron_nugget:666:pyrite",
-        "poisonous_potato:666:ergot_sclerotium"
+        "poisonous_potato:666:ergot_sclerotium",
+        "book:1337:tihkal"
     ],
     "out": "./LSD/assets/minecraft/models/item"
 }
