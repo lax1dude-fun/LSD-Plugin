@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.Sign;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -175,6 +176,23 @@ public class CraftingSystem implements Listener {
 		}
 	}	
 	
+	public ArrayList<Block> getMatchingAdjacents(Block block, Material match) {
+		ArrayList<Block> result = new ArrayList<Block>();
+
+		Block[] adjacents = { block.getRelative(1, 0, 0),
+		block.getRelative(-1, 0, 0),
+		 block.getRelative(0, 0, 1),
+		 block.getRelative(0, 0, -1) };
+
+		for (int i = 0; 4 > i; i++) {
+			if (adjacents[i].getType() == match) {
+				result.add(adjacents[i]);
+			}
+		}
+		
+		return result;
+	}
+	
 	@EventHandler
 	public void onBreakBlock(BlockBreakEvent event) {
 		handleCustomBlockDrop(event.getBlock(), event.getPlayer(), event);
@@ -188,10 +206,27 @@ public class CraftingSystem implements Listener {
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		ItemStack heldItem = event.getItem();
-		ItemMeta heldItemMeta = heldItem.getItemMeta();
+		World world = event.getPlayer().getWorld();
 		
-		if (heldItem != null && heldItem.getType() == Material.BOOK && heldItemMeta.hasCustomModelData() && heldItemMeta.getCustomModelData() == 1337) {
+		if (heldItem != null && heldItem.getType() == Material.BOOK && heldItem.hasItemMeta() && heldItem.getItemMeta().hasCustomModelData() && heldItem.getItemMeta().getCustomModelData() == 1337) {
 			displayRecipe(event.getPlayer(), "lsd");
+		} else if (event.hasBlock()) {
+			Block block = event.getClickedBlock();
+			BlockData data = block.getBlockData();
+			plugin.getLogger().info("got here");
+			if (block.getType() == Material.OAK_SIGN || block.getType() == Material.OAK_WALL_SIGN) {
+				Sign sign = (Sign)block.getState();
+				
+				if (sign.getLine(0).equalsIgnoreCase("Lab Bench")) {
+					ArrayList<Block> quartzAdjacents = getMatchingAdjacents(block, Material.QUARTZ_BRICKS);
+					if (quartzAdjacents.size() == 1) {
+						Block labBenchPiece = quartzAdjacents.get(0);
+						if (getMatchingAdjacents(labBenchPiece, Material.QUARTZ_BRICKS).size() == 2) {
+							openLab(event.getPlayer());
+						}
+					}
+				}
+			}
 		}
 	}
 }
