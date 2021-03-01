@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -14,13 +15,20 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.Sign;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.ArmorStand.LockType;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -193,6 +201,24 @@ public class CraftingSystem implements Listener {
 		return result;
 	}
 	
+	public void placeLabEquipmentModel(Location loc, int equipmentIndex) {
+		ArmorStand entity = (ArmorStand)loc.getWorld().spawnEntity(loc.add(0.5, -0.1875, 0.5), EntityType.ARMOR_STAND);
+		entity.setInvisible(true);
+		entity.setInvulnerable(true);
+		entity.setGravity(false);
+		ItemStack labEquipment = new ItemStack(Material.DIAMOND_SWORD);
+		ItemMeta labEquipmentMeta = labEquipment.getItemMeta();
+		labEquipmentMeta.setCustomModelData(1337 + equipmentIndex);
+		labEquipment.setItemMeta(labEquipmentMeta);
+		entity.getEquipment().setHelmet(labEquipment);
+		entity.addEquipmentLock(EquipmentSlot.HEAD, LockType.REMOVING_OR_CHANGING);
+		entity.addEquipmentLock(EquipmentSlot.CHEST, LockType.ADDING_OR_CHANGING);
+		entity.addEquipmentLock(EquipmentSlot.LEGS, LockType.ADDING_OR_CHANGING);
+		entity.addEquipmentLock(EquipmentSlot.FEET, LockType.ADDING_OR_CHANGING);
+		entity.addEquipmentLock(EquipmentSlot.HAND, LockType.ADDING_OR_CHANGING);
+		entity.addEquipmentLock(EquipmentSlot.OFF_HAND, LockType.ADDING_OR_CHANGING);
+	}
+	
 	@EventHandler
 	public void onBreakBlock(BlockBreakEvent event) {
 		handleCustomBlockDrop(event.getBlock(), event.getPlayer(), event);
@@ -224,6 +250,30 @@ public class CraftingSystem implements Listener {
 						if (getMatchingAdjacents(labBenchPiece, Material.QUARTZ_BRICKS).size() == 2) {
 							openLab(event.getPlayer());
 						}
+					}
+				}
+			}
+		}
+	}
+	
+	@EventHandler(priority=EventPriority.MONITOR)
+	public void onSignChange(SignChangeEvent event) {
+
+		Block block = event.getBlock();
+		BlockData data = block.getBlockData();
+		if (block.getType() == Material.OAK_SIGN || block.getType() == Material.OAK_WALL_SIGN) {
+			Sign sign = (Sign)block.getState();
+			plugin.getLogger().info(event.getLine(0));
+			
+			if (event.getLine(0).equalsIgnoreCase("Lab Bench")) {
+				ArrayList<Block> quartzAdjacents = getMatchingAdjacents(block, Material.QUARTZ_BRICKS);
+				if (quartzAdjacents.size() == 1) {
+					Block labBenchPiece = quartzAdjacents.get(0);
+					ArrayList<Block> otherBenchPieces = getMatchingAdjacents(labBenchPiece, Material.QUARTZ_BRICKS);
+					if (otherBenchPieces.size() == 2) {
+						placeLabEquipmentModel(labBenchPiece.getLocation(), 0);
+						placeLabEquipmentModel(otherBenchPieces.get(0).getLocation(), 1);
+						placeLabEquipmentModel(otherBenchPieces.get(1).getLocation(), 2);
 					}
 				}
 			}

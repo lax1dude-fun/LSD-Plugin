@@ -1,1 +1,26 @@
-{"parent":"item/generated","textures":{"layer0":"item/diamond_sword"},"overrides":[{"predicate":{"custom_model_data":1337},"model":"item/lab_equipment"}]}
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "item/diamond_sword"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "custom_model_data": 1337
+            },
+            "model": "item/lab_equipment"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 1338
+            },
+            "model": "item/lab_equipment_2"
+        },
+        {
+            "predicate": {
+                "custom_model_data": 1339
+            },
+            "model": "item/lab_equipment_3"
+        }
+    ]
+}
