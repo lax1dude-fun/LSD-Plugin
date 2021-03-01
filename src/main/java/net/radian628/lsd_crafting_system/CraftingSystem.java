@@ -28,6 +28,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -277,6 +278,20 @@ public class CraftingSystem implements Listener {
 					}
 				}
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onLootGenerate(LootGenerateEvent event) {
+		plugin.getLogger().info("loot generated");
+		if (rand.nextFloat() > 0.9) {
+			ItemStack tihkal = new ItemStack(Material.BOOK);
+			ItemMeta tihkalMeta = tihkal.getItemMeta();
+			tihkalMeta.setCustomModelData(1337);
+			tihkalMeta.setDisplayName(ChatColor.RESET + "TiHKAL");
+			tihkal.setItemMeta(tihkalMeta);
+			
+			event.getInventoryHolder().getInventory().addItem(tihkal);
 		}
 	}
 }
