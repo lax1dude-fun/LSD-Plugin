@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -42,8 +41,8 @@ import net.minecraft.server.v1_16_R3.Vec3D;
 
 public class PacketConstructors {
 	
-	public static void sendPacket(Player p, Packet pkt) {
-		((CraftPlayer)p).getHandle().playerConnection.sendPacket(pkt);
+	public static void sendPacket(Player p, Object pkt) {
+		((CraftPlayer)p).getHandle().playerConnection.sendPacket((Packet)pkt);
 	}
 	
 	private static void setField(Object o, String f, Object v) {
@@ -106,11 +105,11 @@ public class PacketConstructors {
 		}
 	}
 	
-	public static PacketPlayOutUpdateHealth createHealthUpdate(float health, int food, float saturation) {
+	public static Object createHealthUpdate(float health, int food, float saturation) {
 		return new PacketPlayOutUpdateHealth(health, food, saturation);
 	}
 	
-	public static PacketPlayOutAbilities createPlayerAbilities(boolean invul, boolean isFlying, boolean canFly, boolean canInstantlyBuild, float flyspeed, float fov) {
+	public static Object createPlayerAbilities(boolean invul, boolean isFlying, boolean canFly, boolean canInstantlyBuild, float flyspeed, float fov) {
 		PacketPlayOutAbilities abilities = new PacketPlayOutAbilities();
 		setFieldBool(abilities, "a", invul);
 		setFieldBool(abilities, "b", isFlying);
@@ -121,7 +120,7 @@ public class PacketConstructors {
 		return abilities;
 	}
 	
-	public static PacketPlayOutEntityEffect createEntityEffect(int entity, byte effect, byte amp, int duration, byte flags) {
+	public static Object createEntityEffect(int entity, byte effect, byte amp, int duration, byte flags) {
 		PacketPlayOutEntityEffect ret = new PacketPlayOutEntityEffect();
 		setFieldI(ret, "a", entity);
 		setFieldB(ret, "b", effect);
@@ -131,14 +130,14 @@ public class PacketConstructors {
 		return ret;
 	}
 	
-	public static PacketPlayOutRemoveEntityEffect createRemoveEntityEffect(int entity, byte effect) {
+	public static Object createRemoveEntityEffect(int entity, byte effect) {
 		PacketPlayOutRemoveEntityEffect ret = new PacketPlayOutRemoveEntityEffect();
 		setFieldI(ret, "a", entity);
 		setField(ret, "b", MobEffectList.fromId(effect));
 		return ret;
 	}
 	
-	public static PacketPlayOutWorldParticles createParticles(int particleType, boolean distance, double x, double y, double z, float sx, float sy, float sz, float data, int count) {
+	public static Object createParticles(int particleType, boolean distance, double x, double y, double z, float sx, float sy, float sz, float data, int count) {
 		return new PacketPlayOutWorldParticles(new ParticleParam() {
 			
 			@Override
@@ -158,11 +157,11 @@ public class PacketConstructors {
 		}, distance, x, y, z, sx, sy, sz, data, count);
 	}
 	
-	public static PacketPlayOutSpawnEntity createSpawnEntity(int id, UUID uuid, String type, double x, double y, double z, float yaw, float pitch, int data, float motionx, float motiony, float motionz) {
+	public static Object createSpawnEntity(int id, UUID uuid, String type, double x, double y, double z, float yaw, float pitch, int data, float motionx, float motiony, float motionz) {
 		return new PacketPlayOutSpawnEntity(id, uuid, x, y, z, yaw, pitch, EntityTypes.a(type).get(), data, new Vec3D(motionx, motiony, motionz));
 	}
 	
-	public static PacketPlayOutSpawnEntityLiving createSpawnLivingEntity(int id, UUID uuid, String type, double x, double y, double z, float yaw, float pitch, float headpitch, int data, float motionx, float motiony, float motionz) {
+	public static Object createSpawnLivingEntity(int id, UUID uuid, String type, double x, double y, double z, float yaw, float pitch, float headpitch, int data, float motionx, float motiony, float motionz) {
 		PacketPlayOutSpawnEntityLiving ret = new PacketPlayOutSpawnEntityLiving();
 		setFieldI(ret, "a", id);
 		setField(ret, "b", uuid);
@@ -179,7 +178,7 @@ public class PacketConstructors {
 		return ret;
 	}
 	
-	public static PacketPlayOutEntityTeleport createMoveEntity(int id, double x, double y, double z, float yaw, float pitch) {
+	public static Object createMoveEntity(int id, double x, double y, double z, float yaw, float pitch) {
 		PacketPlayOutEntityTeleport ret = new PacketPlayOutEntityTeleport();
 		setFieldI(ret, "a", id);
 		setFieldD(ret, "b", x);
@@ -191,7 +190,7 @@ public class PacketConstructors {
 		return ret;
 	}
 	
-	public static PacketPlayOutEntityMetadata createEntityData(int id, int slot, int type, Object o) {
+	public static Object createEntityData(int id, int slot, int type, Object o) {
 		PacketPlayOutEntityMetadata ret = new PacketPlayOutEntityMetadata();
 		setFieldI(ret, "a", id);
 		ArrayList<Item> itemsList = new ArrayList();
@@ -212,40 +211,40 @@ public class PacketConstructors {
 		return i;
 	}
 	
-	public static PacketPlayOutEntityMetadata createEntityDataSlot(int id, int slot, String item) {
+	public static Object createEntityDataSlot(int id, int slot, String item) {
 		return createEntityData(id, slot, 6, new ItemStack(RegistryBlocks.ITEM.get(MinecraftKey.a(item))));
 	}
 	
-	public static PacketPlayOutEntityDestroy createDestoryEntity(int id) {
+	public static Object createDestoryEntity(int id) {
 		return new PacketPlayOutEntityDestroy(id);
 	}
 	
-	public static PacketPlayOutEntityVelocity createEntityVelocity(int id, float x, float y, float z) {
+	public static Object createEntityVelocity(int id, float x, float y, float z) {
 		return new PacketPlayOutEntityVelocity(id, new Vec3D(x, y, z));
 	}
 	
-	public static PacketPlayOutEntityHeadRotation createEntityLook(int id, float head) {
+	public static Object createEntityLook(int id, float head) {
 		PacketPlayOutEntityHeadRotation ret = new PacketPlayOutEntityHeadRotation();
 		setFieldI(ret, "a", id);
 		setFieldB(ret, "b", (byte) ((int) (head * 256.0F / 360.0F)));
 		return ret;
 	}
 	
-	public static PacketPlayOutWorldBorder createWorldBorder(double diameter) {
+	public static Object createWorldBorder(double diameter) {
 		PacketPlayOutWorldBorder ret = new PacketPlayOutWorldBorder();
 		setField(ret, "a", EnumWorldBorderAction.SET_SIZE);
 		setFieldD(ret, "e", diameter);
 		return ret;
 	}
 	
-	public static PacketPlayOutWorldBorder createWorldBorderWarn(int diameter) {
+	public static Object createWorldBorderWarn(int diameter) {
 		PacketPlayOutWorldBorder ret = new PacketPlayOutWorldBorder();
 		setField(ret, "a", EnumWorldBorderAction.SET_WARNING_BLOCKS);
 		setFieldI(ret, "i", diameter);
 		return ret;
 	}
 	
-	public static PacketPlayOutCamera createCamera(int id) {
+	public static Object createCamera(int id) {
 		PacketPlayOutCamera ret = new PacketPlayOutCamera();
 		setFieldI(ret, "a", id);
 		return ret;

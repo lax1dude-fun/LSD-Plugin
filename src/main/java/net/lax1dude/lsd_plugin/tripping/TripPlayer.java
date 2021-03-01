@@ -89,7 +89,7 @@ public class TripPlayer {
 					PacketConstructors.sendPacket(player, PacketConstructors.createHealthUpdate((float) (player.getHealth() - 0.1f), player.getFoodLevel(), player.getSaturation()));
 					PacketConstructors.sendPacket(player, PacketConstructors.createHealthUpdate((float) (player.getHealth()), player.getFoodLevel(), player.getSaturation()));
 				}
-				if(timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
+				if(currentDose > 70f && timer % (random.nextInt((int)(4000 / currentDose) + 1) + 1) == 0) {
 					givePotionEffect(9, 0, random.nextInt(200) + 100);
 				}
 				if(timer % (random.nextInt((int)(40000 / currentDose) + 1) + 1) == 0) {
