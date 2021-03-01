@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.Sign;
@@ -284,7 +285,7 @@ public class CraftingSystem implements Listener {
 	@EventHandler
 	public void onLootGenerate(LootGenerateEvent event) {
 		plugin.getLogger().info("loot generated");
-		if (rand.nextFloat() > 0.9) {
+		if (event.getInventoryHolder() instanceof Chest && rand.nextFloat() > 0.9) {
 			ItemStack tihkal = new ItemStack(Material.BOOK);
 			ItemMeta tihkalMeta = tihkal.getItemMeta();
 			tihkalMeta.setCustomModelData(1337);
