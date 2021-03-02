@@ -1,6 +1,8 @@
 package net.radian628.lsd_crafting_system;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.block.Sign;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
@@ -47,6 +51,7 @@ public class CraftingSystem implements Listener {
 	JavaPlugin plugin;
 	Random rand;
 	ArrayList<LabBenchRecipe> recipes;
+	HashMap<String, FileConfiguration> configs;
 	
 	public CraftingSystem(JavaPlugin javaPlugin) {
 		rand = new Random();
@@ -54,13 +59,36 @@ public class CraftingSystem implements Listener {
 		plugin.getLogger().info("test");
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		recipes = new ArrayList<LabBenchRecipe>();
+		configs = new HashMap<String, FileConfiguration>();
+		addConfig("recipes");
 		getAllRecipes();
 	}
 	
+	public void addConfig(String name) {
+		String filename = name + ".yml";
+		File configFile = new File(plugin.getDataFolder(), filename);
+		if (!configFile.exists()) {
+			configFile.getParentFile().mkdirs();
+			plugin.saveResource(filename, false);
+		}
+		
+		YamlConfiguration config = new YamlConfiguration();
+		
+		try {
+			config.load(configFile);
+			configs.put(name, config);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
 
+	public FileConfiguration getConfig(String name) {
+		return configs.get(name);
+	}
+	
 	public void getAllRecipes() {
 		recipes.clear();
-		Map<String, Object> recipesInConfig = plugin.getConfig().getConfigurationSection("recipes").getValues(false);
+		Map<String, Object> recipesInConfig = getConfig("recipes").getConfigurationSection("recipes").getValues(false);
 
 		Iterator<Entry<String, Object>> recipeIterator = recipesInConfig.entrySet().iterator();
 		while (recipeIterator.hasNext()) {
@@ -71,7 +99,7 @@ public class CraftingSystem implements Listener {
 			String ingredientKey = "recipes." + recipeName + ".ingredients";
 			ItemStack[] requiredIngredients = new ItemStack[9];
 	
-			Map<String, Object> requiredIngredientsFromConfig = plugin.getConfig().getConfigurationSection(ingredientKey).getValues(true);
+			Map<String, Object> requiredIngredientsFromConfig = getConfig("recipes").getConfigurationSection(ingredientKey).getValues(true);
 			
 			for (int i = 0; 9 > i; i++) {
 				
@@ -80,7 +108,7 @@ public class CraftingSystem implements Listener {
 				requiredIngredients[i] = requiredIngredient;
 			}
 			
-			ItemStack product = plugin.getConfig().getItemStack("recipes." + recipeName + ".product");
+			ItemStack product = getConfig("recipes").getItemStack("recipes." + recipeName + ".product");
 			
 			String byproductsKey = "recipes." + recipeName + ".byproducts";
 			
@@ -88,9 +116,9 @@ public class CraftingSystem implements Listener {
 			ItemStack[] byproducts = null;
 			
 			
-			if (plugin.getConfig().isList(byproductsKey)) {
+			if (getConfig("recipes").isList(byproductsKey)) {
 				
-				byproductsList = (List<ItemStack>)plugin.getConfig().get(byproductsKey);
+				byproductsList = (List<ItemStack>)getConfig("recipes").get(byproductsKey);
 				byproducts = new ItemStack[byproductsList.size()];
 				byproductsList.toArray(byproducts);
 			}
@@ -101,7 +129,7 @@ public class CraftingSystem implements Listener {
 			
 			String shapelessKey = "recipes." + recipeName + ".shapeless";
 			
-			if (plugin.getConfig().isBoolean(shapelessKey) && plugin.getConfig().getBoolean(shapelessKey)) {
+			if (getConfig("recipes").isBoolean(shapelessKey) && getConfig("recipes").getBoolean(shapelessKey)) {
 				recipes.add(new ShapelessLabBenchRecipe(requiredIngredients, product, byproducts, recipeName));
 			} else {
 				recipes.add(new LabBenchRecipe(requiredIngredients, product, byproducts, recipeName));
