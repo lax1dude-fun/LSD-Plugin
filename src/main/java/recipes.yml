@@ -1,0 +1,853 @@
+recipes:
+   citric-acid:
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         6:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         8:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: APPLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 666
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Citric Acid","italic":"false"}'
+      
+   sulfuric-acid:
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: IRON_NUGGET
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: IRON_NUGGET
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+            meta:
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         6:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: IRON_NUGGET
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         8:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: IRON_NUGGET
+            amount: 1
+            meta:
+               ==: ItemMeta
+               meta-type: UNSPECIFIC
+               custom-model-data: 666
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 667
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Sulfuric Acid","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+
+   ethanol:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BROWN_MUSHROOM
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WHEAT
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 669
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Ethanol","italic":"false"}'
+      
+   potash:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: OAK_LOG
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 670
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Potassium Carbonate","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+      
+   calcium-hydroxide:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: NAUTILUS_SHELL
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 671
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Calcium Hydroxide","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+      
+   potassium-hydroxide:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 670
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 671
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 672
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Potassium Hydroxide","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      
+   ammonia:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: COAL
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 673
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Ammonia","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+      
+   ergot_growth_medium:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 666
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 673
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: SUGAR
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WHEAT
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BONE_MEAL
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 674
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Ergot Growth Medium","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      
+   diethyl-ether:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 667
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 669
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 668
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Diethyl Ether","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      
+   ergotamine-tartrate:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 674
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 682
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 675
+               meta-type: UNSPECIFIC
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 673
+               meta-type: UNSPECIFIC
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: POISONOUS_POTATO
+            amount: 4
+            meta:
+               ==: ItemMeta
+               custom-model-data: 666
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 683
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Ergotamine Tartrate","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 3
+      
+   tartaric-acid:
+      ingredients:
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 669
+               meta-type: UNSPECIFIC
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 671
+               meta-type: UNSPECIFIC
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 669
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 675
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Tartaric Acid","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 2
+      
+   benzene:
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: COAL
+            amount: 1
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: COAL
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: WATER_BUCKET
+            amount: 1
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: COAL
+            amount: 1
+         6:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+         8:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BLAZE_POWDER
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 682
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Benzene","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BUCKET
+            amount: 1
+      
+   lysergic-acid:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 672
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 683
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 667
+               meta-type: UNSPECIFIC
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 673
+               meta-type: UNSPECIFIC
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 669
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 684
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Lysergic Acid","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 4
+      
+   lsd-base:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 684
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 677
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 678
+               meta-type: UNSPECIFIC
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 679
+               meta-type: UNSPECIFIC
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 680
+               meta-type: UNSPECIFIC
+         5:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 681
+               meta-type: UNSPECIFIC
+         6:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 682
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 685
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"LSD Base","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 6
+
+   methanol:
+      ingredients:
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: BROWN_MUSHROOM
+            amount: 1
+         4:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: OAK_LOG
+            amount: 1
+         7:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 676
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Methanol","italic":"false"}'
+      
+   lsd:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 676
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 675
+               meta-type: UNSPECIFIC
+         2:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 668
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: GLASS_BOTTLE
+         amount: 1
+         meta:
+            ==: ItemMeta
+            custom-model-data: 686
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"LSD","italic":"false"}'
+      byproducts:
+         -
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 2
