@@ -80,16 +80,28 @@ public class TiHKALMapHooks implements Listener {
 
         }
     }
+    
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-    	if(event.hasItem() && event.getItem().hasItemMeta() && (event.getItem().getItemMeta() instanceof MapMeta)) {
-    		MapMeta mapMeta = (MapMeta) event.getItem().getItemMeta();
+    	ItemStack i = event.getItem();
+    	if(i != null && i.hasItemMeta() && (i.getItemMeta() instanceof MapMeta)) {
+    		MapMeta mapMeta = (MapMeta) i.getItemMeta();
     		if(mapMeta.getMapView() != null && mapMeta.getMapView().getRenderers().size() > 0 && (mapMeta.getMapView().getRenderers().get(0) instanceof TiHKALMapRenderer)) {
     			if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
     				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).previousPage();
     				event.setCancelled(true);
     			}else if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
     				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).nextPage();
+    				event.setCancelled(true);
+    			}
+    		}
+    	}
+    	i = event.getPlayer().getInventory().getItemInOffHand();
+    	if(i != null && i.hasItemMeta() && (i.getItemMeta() instanceof MapMeta)) {
+    		MapMeta mapMeta = (MapMeta) i.getItemMeta();
+    		if(mapMeta.getMapView() != null && mapMeta.getMapView().getRenderers().size() > 0 && (mapMeta.getMapView().getRenderers().get(0) instanceof TiHKALMapRenderer)) {
+    			if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+    				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).previousPage();
     				event.setCancelled(true);
     			}
     		}
