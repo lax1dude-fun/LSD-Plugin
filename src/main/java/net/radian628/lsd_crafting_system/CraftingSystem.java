@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -37,8 +38,12 @@ import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.map.MapView;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.lax1dude.lsd_plugin.TiHKALMapHooks;
+import net.lax1dude.lsd_plugin.TiHKALMapRenderer;
 import net.md_5.bungee.api.ChatColor;
 
 public class CraftingSystem implements Listener {
@@ -314,12 +319,13 @@ public class CraftingSystem implements Listener {
 	public void onLootGenerate(LootGenerateEvent event) {
 		plugin.getLogger().info("loot generated");
 		if (event.getInventoryHolder() instanceof Chest && rand.nextFloat() > 0.9) {
-			ItemStack tihkal = new ItemStack(Material.BOOK);
-			ItemMeta tihkalMeta = tihkal.getItemMeta();
-			tihkalMeta.setCustomModelData(1337);
-			tihkalMeta.setDisplayName(ChatColor.RESET + "TiHKAL");
-			tihkal.setItemMeta(tihkalMeta);
+			ItemStack tihkal = new ItemStack(Material.FILLED_MAP);
 			
+			MapMeta tihkalMeta = (MapMeta)tihkal.getItemMeta();
+			tihkalMeta.setCustomModelData(666);
+			tihkalMeta.setDisplayName(ChatColor.RESET + "TiHKAL");
+			
+			tihkal.setItemMeta(tihkalMeta);
 			event.getInventoryHolder().getInventory().addItem(tihkal);
 		}
 	}

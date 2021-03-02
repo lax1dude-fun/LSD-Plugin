@@ -31,6 +31,7 @@ public class PluginMain extends JavaPlugin {
 		tripMgr = new TripManager(this);
 		craftingSystem = new CraftingSystem(this);
 		getServer().getPluginManager().registerEvents(tripMgr, this);
+		getServer().getPluginManager().registerEvents(new TiHKALMapHooks(), this);
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -42,6 +43,21 @@ public class PluginMain extends JavaPlugin {
 					
 				}else if(args[0].equalsIgnoreCase("help")) {
 					
+				}else if(args[0].equalsIgnoreCase("tihkal")) {
+					if(args.length == 2) {
+						Player p = getServer().getPlayer(args[2]);
+						if(p != null) {
+							p.getInventory().addItem(TiHKALMapHooks.getMapItem());
+							sender.sendMessage("Spawned a TiHKAL book");
+						}else {
+							sender.sendMessage("That player does not exist");
+						}
+					}else {
+						if(sender instanceof Player) {
+							((Player)sender).getInventory().addItem(TiHKALMapHooks.getMapItem());
+						}
+						sender.sendMessage("Spawned a TiHKAL book");
+					}
 				}else if(args[0].equalsIgnoreCase("dose")) {
 					if(args.length > 1) {
 						try {
