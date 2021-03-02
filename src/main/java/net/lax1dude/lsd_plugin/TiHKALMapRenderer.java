@@ -2,6 +2,7 @@ package net.lax1dude.lsd_plugin;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -37,7 +38,11 @@ public class TiHKALMapRenderer extends MapRenderer {
 	private static void loadPage(int p) {
 		if(pageCache[p] == null) {
 			try {
-				pageCache[p] = ImageIO.read(TiHKALMapRenderer.class.getResource("/assets/lsdplugin/tihkal/page"+p+".png"));
+				InputStream i = PluginMain.instance.getResource("/assets/lsdplugin/tihkal/page"+p+".png");
+				if(i == null) {
+					i = TiHKALMapRenderer.class.getResourceAsStream("/assets/lsdplugin/tihkal/page"+p+".png");
+				}
+				pageCache[p] = ImageIO.read(i);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
