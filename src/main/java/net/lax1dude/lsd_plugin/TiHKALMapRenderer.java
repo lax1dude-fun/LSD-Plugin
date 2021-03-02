@@ -38,7 +38,7 @@ public class TiHKALMapRenderer extends MapRenderer {
 	private static void loadPage(int p) {
 		if(pageCache[p] == null) {
 			try {
-				InputStream i = PluginMain.instance.getResource("/assets/lsdplugin/tihkal/page"+p+".png");
+				InputStream i = PluginMain.instance.getResource("assets/lsdplugin/tihkal/page"+p+".png");
 				if(i == null) {
 					i = TiHKALMapRenderer.class.getResourceAsStream("/assets/lsdplugin/tihkal/page"+p+".png");
 				}
