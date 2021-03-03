@@ -1107,3 +1107,35 @@ recipes:
             meta-type: UNSPECIFIC
             display-name: '{"text":"Magnesium Sulfate","italic":"false"}'
       
+   lsd-tab:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 686
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: PAPER
+            amount: 32
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: PAPER
+         amount: 32
+         meta:
+            ==: ItemMeta
+            custom-model-data: 1337
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"100\u00B5g LSD Tab","italic":"false"}'
+            enchants:
+               KNOCKBACK: 0
+            ItemFlags:
+               - HIDE_ENCHANTS
+      

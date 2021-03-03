@@ -44,18 +44,19 @@ import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.lax1dude.lsd_plugin.PluginMain;
 import net.lax1dude.lsd_plugin.TiHKALMapHooks;
 import net.lax1dude.lsd_plugin.TiHKALMapRenderer;
 import net.md_5.bungee.api.ChatColor;
 
 public class CraftingSystem implements Listener {
 	
-	JavaPlugin plugin;
+	PluginMain plugin;
 	Random rand;
 	ArrayList<LabBenchRecipe> recipes;
 	HashMap<String, FileConfiguration> configs;
 	
-	public CraftingSystem(JavaPlugin javaPlugin) {
+	public CraftingSystem(PluginMain javaPlugin) {
 		rand = new Random();
 		plugin = javaPlugin;
 		plugin.getLogger().info("test");
@@ -266,6 +267,10 @@ public class CraftingSystem implements Listener {
 		handleCustomBlockDrop(event.getBlock(), null, null);
 	}
 	
+	public boolean checkItemAndModelData(ItemStack item, Material itemId, int customModelData) {
+		return item != null && item.getType() == itemId && item.hasItemMeta() && item.getItemMeta().hasCustomModelData() && item.getItemMeta().getCustomModelData() == customModelData;
+	}
+	
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		ItemStack heldItem = event.getItem();
@@ -273,6 +278,9 @@ public class CraftingSystem implements Listener {
 		
 		if (heldItem != null && heldItem.getType() == Material.BOOK && heldItem.hasItemMeta() && heldItem.getItemMeta().hasCustomModelData() && heldItem.getItemMeta().getCustomModelData() == 1337) {
 			displayRecipe(event.getPlayer(), "lsd");
+		} else if (checkItemAndModelData(heldItem, Material.PAPER, 1337)) {
+			plugin.tripMgr.dose(event.getPlayer(), 100);
+			event.getItem().setAmount(event.getItem().getAmount() - 1);
 		} else if (event.hasBlock()) {
 			Block block = event.getClickedBlock();
 			BlockData data = block.getBlockData();
