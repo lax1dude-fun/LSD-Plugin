@@ -33,6 +33,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -327,6 +329,20 @@ public class CraftingSystem implements Listener {
 			
 			tihkal.setItemMeta(tihkalMeta);
 			event.getInventoryHolder().getInventory().addItem(tihkal);
+		}
+	}
+	
+	@EventHandler
+	public void onEntityInteractEntity(PlayerInteractEntityEvent event) {
+		Entity entity = event.getRightClicked();
+		ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
+		
+		if (entity.getType() == EntityType.COW && heldItem.getType() == Material.GLASS_BOTTLE) {
+			ItemMeta heldItemMeta = heldItem.getItemMeta();
+			heldItemMeta.setDisplayName(ChatColor.RESET + "Methane");
+			heldItemMeta.setCustomModelData(689);
+			heldItem.setItemMeta(heldItemMeta);
+			event.getPlayer().getInventory().setItemInMainHand(heldItem);
 		}
 	}
 }
