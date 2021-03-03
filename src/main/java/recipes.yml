@@ -835,6 +835,15 @@ recipes:
                ==: ItemMeta
                custom-model-data: 668
                meta-type: UNSPECIFIC
+         3:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 685
+               meta-type: UNSPECIFIC
       product:
          ==: org.bukkit.inventory.ItemStack
          v: 2586
@@ -1139,3 +1148,35 @@ recipes:
             ItemFlags:
                - HIDE_ENCHANTS
       
+      
+   diethylamine:
+      shapeless: true
+      ingredients:
+         0:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 669
+               meta-type: UNSPECIFIC
+         1:
+            ==: org.bukkit.inventory.ItemStack
+            v: 2586
+            type: GLASS_BOTTLE
+            amount: 1
+            meta:
+               ==: ItemMeta
+               custom-model-data: 673
+               meta-type: UNSPECIFIC
+      product:
+         ==: org.bukkit.inventory.ItemStack
+         v: 2586
+         type: PAPER
+         amount: 32
+         meta:
+            ==: ItemMeta
+            custom-model-data: 677
+            meta-type: UNSPECIFIC
+            display-name: '{"text":"Diethylamine","italic":"false"}'
