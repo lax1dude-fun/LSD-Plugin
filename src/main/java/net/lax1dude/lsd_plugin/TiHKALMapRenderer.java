@@ -16,7 +16,7 @@ public class TiHKALMapRenderer extends MapRenderer {
 	private int pageNumber = 0;
 	private int prevPageNumber = -1;
 	
-	private static final int maxPages = 5;
+	private static final int maxPages = 11;
 	
 	private static final BufferedImage[] pageCache = new BufferedImage[maxPages];
 	
