@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -30,10 +29,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.LootGenerateEvent;
@@ -41,12 +38,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.MapMeta;
-import org.bukkit.map.MapView;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import net.lax1dude.lsd_plugin.PluginMain;
-import net.lax1dude.lsd_plugin.TiHKALMapHooks;
-import net.lax1dude.lsd_plugin.TiHKALMapRenderer;
 import net.md_5.bungee.api.ChatColor;
 
 public class CraftingSystem implements Listener {
@@ -124,10 +117,6 @@ public class CraftingSystem implements Listener {
 				byproductsList = (List<ItemStack>)getConfig("recipes").get(byproductsKey);
 				byproducts = new ItemStack[byproductsList.size()];
 				byproductsList.toArray(byproducts);
-			}
-			
-			if (byproducts != null) {
-				plugin.getLogger().info("noticed byproducts actually exist and has size " + String.valueOf(byproducts.length));
 			}
 			
 			String shapelessKey = "recipes." + recipeName + ".shapeless";
@@ -274,7 +263,6 @@ public class CraftingSystem implements Listener {
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		ItemStack heldItem = event.getItem();
-		World world = event.getPlayer().getWorld();
 		
 		if (heldItem != null && heldItem.getType() == Material.BOOK && heldItem.hasItemMeta() && heldItem.getItemMeta().hasCustomModelData() && heldItem.getItemMeta().getCustomModelData() == 1337) {
 			displayRecipe(event.getPlayer(), "lsd");
@@ -283,8 +271,6 @@ public class CraftingSystem implements Listener {
 			event.getItem().setAmount(event.getItem().getAmount() - 1);
 		} else if (event.hasBlock()) {
 			Block block = event.getClickedBlock();
-			BlockData data = block.getBlockData();
-			plugin.getLogger().info("got here");
 			if (block.getType() == Material.OAK_SIGN || block.getType() == Material.OAK_WALL_SIGN) {
 				Sign sign = (Sign)block.getState();
 				
@@ -305,9 +291,7 @@ public class CraftingSystem implements Listener {
 	public void onSignChange(SignChangeEvent event) {
 
 		Block block = event.getBlock();
-		BlockData data = block.getBlockData();
 		if (block.getType() == Material.OAK_SIGN || block.getType() == Material.OAK_WALL_SIGN) {
-			Sign sign = (Sign)block.getState();
 			plugin.getLogger().info(event.getLine(0));
 			
 			if (event.getLine(0).equalsIgnoreCase("Lab Bench")) {
@@ -327,7 +311,6 @@ public class CraftingSystem implements Listener {
 	
 	@EventHandler
 	public void onLootGenerate(LootGenerateEvent event) {
-		plugin.getLogger().info("loot generated");
 		if (event.getInventoryHolder() instanceof Chest && rand.nextFloat() > 0.9) {
 			ItemStack tihkal = new ItemStack(Material.FILLED_MAP);
 			
