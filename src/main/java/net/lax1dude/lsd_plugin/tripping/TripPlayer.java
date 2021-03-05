@@ -139,9 +139,11 @@ public class TripPlayer {
 					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
 				}
 				if(currentDose > 260f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
+					this.addEntity(new TripEntityCamera(this, CameraMode.values()[random.nextInt(3) + 1]));
+				}
+				if(currentDose > 300f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
 					String[] mobTable = new String[] {"creeper", "enderman", "spider", "skeleton"};
 					this.addEntity(new TripEntityExternalCamera(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
-				
 				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {

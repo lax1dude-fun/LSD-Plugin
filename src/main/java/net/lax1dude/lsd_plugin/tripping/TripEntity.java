@@ -8,6 +8,8 @@ public abstract class TripEntity {
 	
 	public int id;
 	public boolean alive = true;
+	
+	public int age;
 
 	public double posX;
 	public double posY;
@@ -23,12 +25,14 @@ public abstract class TripEntity {
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;
+		this.age = 0;
 	}
 	
 	public void update() {
 		posX += motionX;
 		posY += motionY;
 		posZ += motionZ;
+		++age;
 		tick();
 	}
 

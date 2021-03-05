@@ -19,6 +19,13 @@ public class TripEntityFlyingMob extends TripEntity {
 		motionY = (trip.random.nextFloat() - 0.5f) * speed;
 		motionZ = (trip.random.nextFloat() - 0.5f) * speed;
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createSpawnLivingEntity(-id, UUID.randomUUID(), entity, posX + this.trip.player.getLocation().getX(), posY + this.trip.player.getLocation().getY(), posZ + this.trip.player.getLocation().getZ(), 0.0F, 0.0F, 0.0F, 0, 0.0F, 0.0F, 0.0F));
+
+		byte flags = 0x00;
+		if(trip.random.nextInt(15) == 0) flags |= 0x01;
+		if(trip.random.nextInt(15) == 0) flags |= 0x02;
+		if(trip.random.nextInt(15) == 0) flags |= 0x40;
+		if(trip.random.nextInt(15) == 0) flags |= (0x40 | 0x20);
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(-id, 0, 0, flags));
 	}
 
 	@Override

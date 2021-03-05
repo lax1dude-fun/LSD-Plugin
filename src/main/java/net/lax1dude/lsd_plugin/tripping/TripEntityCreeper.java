@@ -27,6 +27,14 @@ public class TripEntityCreeper extends TripEntity {
 		posZ += this.trip.player.getLocation().getZ();
 		posY = 1.0d + trip.player.getWorld().getHighestBlockYAt((int)Math.floor(posX), (int)Math.floor(posZ));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createSpawnLivingEntity(-id, UUID.randomUUID(), entity, posX, posY, posZ, 0.0F, 0.0F, 0.0F, 0, 0.0F, 0.0F, 0.0F));
+		
+		byte flags = 0x00;
+		if(trip.random.nextInt(15) == 0) flags |= 0x01;
+		if(trip.random.nextInt(15) == 0) flags |= 0x02;
+		if(trip.random.nextInt(15) == 0) flags |= 0x40;
+		if(trip.random.nextInt(15) == 0) flags |= (0x40 | 0x20);
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(-id, 0, 0, flags));
+		
 		recalculateMotion();
 	}
 

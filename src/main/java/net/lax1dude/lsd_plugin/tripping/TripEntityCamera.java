@@ -22,25 +22,31 @@ public class TripEntityCamera extends TripEntity {
 		String name = (cameraMode == CameraMode.CREEPER ? "creeper" : (cameraMode == CameraMode.SPIDER ? "spider" : "enderman"));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createSpawnLivingEntity(-id, UUID.randomUUID(), name,
 				this.trip.player.getLocation().getX(), this.trip.player.getLocation().getY() + getEyeHeight(), this.trip.player.getLocation().getZ(),
-				this.trip.player.getLocation().getYaw(), this.trip.player.getLocation().getPitch(), 0.0f, 0,
+				this.trip.player.getLocation().getYaw(), this.trip.player.getLocation().getPitch(), this.trip.player.getLocation().getYaw(), 0,
 				(float)this.trip.player.getVelocity().getX(), (float)this.trip.player.getVelocity().getY(), (float)this.trip.player.getVelocity().getZ()));
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityEffect(-id, (byte) 14, (byte) 0, 65536, (byte) 0x02));
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(-id, 0, 0, (byte)0x20));
 		
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createCamera(-id));
 	}
 
 	@Override
 	public void tick() {
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(this.trip.player.getEntityId(), 0, 0, (byte)0x20));
+		
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id,
 				this.trip.player.getLocation().getX(), this.trip.player.getLocation().getY() + getEyeHeight(), this.trip.player.getLocation().getZ(),
 				this.trip.player.getLocation().getYaw(), this.trip.player.getLocation().getPitch()));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityVelocity(-id,
 				(float)this.trip.player.getVelocity().getX(), (float)this.trip.player.getVelocity().getY(), (float)this.trip.player.getVelocity().getZ()));
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, -this.trip.player.getLocation().getPitch()));
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, this.trip.player.getLocation().getYaw()));
+		if(this.trip.random.nextInt(50) == 0) this.alive = false;
 	}
 
 	@Override
 	public void destroy() {
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(this.trip.player.getEntityId(), 0, 0, (byte)0x00));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createDestoryEntity(-id));
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createCamera(this.trip.player.getEntityId()));
 	}
 
 }
