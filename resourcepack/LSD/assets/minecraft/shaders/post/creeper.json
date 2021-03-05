@@ -1,12 +1,30 @@
 {
     "targets": [
-        "swap"
+        "swap",
+        "counter",
+        "counterswap"
     ],
     "passes": [
         {
             "name": "mandelbrot",
             "intarget": "minecraft:main",
-            "outtarget": "swap"
+            "outtarget": "swap",
+            "auxtargets": [
+                {
+                    "name": "CounterSampler",
+                    "id": "counter"
+                }
+            ]
+        },
+		{
+           "name": "counter",
+           "intarget": "counter",
+           "outtarget": "counterswap"
+		},
+        {
+            "name": "blit",
+            "intarget": "counterswap",
+            "outtarget": "counter"
         },
         {
             "name": "blit",
