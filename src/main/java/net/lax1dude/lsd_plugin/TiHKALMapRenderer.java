@@ -59,4 +59,8 @@ public class TiHKALMapRenderer extends MapRenderer {
 		}
 	}
 
+	public void indexPage() {
+		pageNumber = 1;
+	}
+
 }

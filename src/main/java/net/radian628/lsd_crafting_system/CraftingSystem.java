@@ -37,9 +37,9 @@ import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.MapMeta;
 
 import net.lax1dude.lsd_plugin.PluginMain;
+import net.lax1dude.lsd_plugin.TiHKALMapHooks;
 import net.md_5.bungee.api.ChatColor;
 
 public class CraftingSystem implements Listener {
@@ -312,14 +312,7 @@ public class CraftingSystem implements Listener {
 	@EventHandler
 	public void onLootGenerate(LootGenerateEvent event) {
 		if (event.getInventoryHolder() instanceof Chest && rand.nextFloat() > 0.9) {
-			ItemStack tihkal = new ItemStack(Material.FILLED_MAP);
-			
-			MapMeta tihkalMeta = (MapMeta)tihkal.getItemMeta();
-			tihkalMeta.setCustomModelData(666);
-			tihkalMeta.setDisplayName(ChatColor.RESET + "TiHKAL");
-			
-			tihkal.setItemMeta(tihkalMeta);
-			event.getInventoryHolder().getInventory().addItem(tihkal);
+			event.getInventoryHolder().getInventory().addItem(TiHKALMapHooks.getMapItem());
 		}
 	}
 	

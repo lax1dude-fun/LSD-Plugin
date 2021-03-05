@@ -25,7 +25,7 @@ public class TiHKALMapHooks implements Listener {
 		
 		MapMeta tihkalMeta = (MapMeta)tihkal.getItemMeta();
 		tihkalMeta.setCustomModelData(666);
-		tihkalMeta.setDisplayName(ChatColor.RESET + "TiHKAL");
+		tihkalMeta.setDisplayName(ChatColor.RESET + "Tryptamines I Have Known and Loved");
 		tihkal.setItemMeta(tihkalMeta);
 		
 		return tihkal;
@@ -87,10 +87,14 @@ public class TiHKALMapHooks implements Listener {
     	if(i != null && i.hasItemMeta() && (i.getItemMeta() instanceof MapMeta)) {
     		MapMeta mapMeta = (MapMeta) i.getItemMeta();
     		if(mapMeta.getMapView() != null && mapMeta.getMapView().getRenderers().size() > 0 && (mapMeta.getMapView().getRenderers().get(0) instanceof TiHKALMapRenderer)) {
-    			if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+    			Action a = event.getAction();
+    			if(event.getPlayer().isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK || a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK)) {
+    				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).indexPage();
+    				event.setCancelled(true);
+    			}else if(a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) {
     				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).previousPage();
     				event.setCancelled(true);
-    			}else if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+    			}else if(a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK) {
     				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).nextPage();
     				event.setCancelled(true);
     			}
@@ -100,7 +104,11 @@ public class TiHKALMapHooks implements Listener {
     	if(i != null && i.hasItemMeta() && (i.getItemMeta() instanceof MapMeta)) {
     		MapMeta mapMeta = (MapMeta) i.getItemMeta();
     		if(mapMeta.getMapView() != null && mapMeta.getMapView().getRenderers().size() > 0 && (mapMeta.getMapView().getRenderers().get(0) instanceof TiHKALMapRenderer)) {
-    			if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+    			Action a = event.getAction();
+    			if(event.getPlayer().isSneaking() && (a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK)) {
+    				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).indexPage();
+    				event.setCancelled(true);
+    			}else if(a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) {
     				((TiHKALMapRenderer)mapMeta.getMapView().getRenderers().get(0)).previousPage();
     				event.setCancelled(true);
     			}
