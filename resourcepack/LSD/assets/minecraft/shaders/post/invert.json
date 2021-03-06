@@ -2,21 +2,38 @@
     "targets": [
         "swap",
         "counter",
-        "counter2"
+        "counter2",
+        "previous"
     ],
     "passes": [
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "previous",
+            "uniforms": []
+        },
+
+
+
         {
             "name": "invert",
             "intarget": "minecraft:main",
             "outtarget": "swap",
             "auxtargets": [
                 {
-                    "name": "PrevSampler",
+                    "name": "CounterSampler",
                     "id": "counter"
+                },
+                {
+                    "name": "PrevSampler",
+                    "id": "previous"
                 }
             ],
             "uniforms": []
         },
+
+
+
         {
             "name": "increment",
             "intarget": "counter",
@@ -39,6 +56,9 @@
                 }
             ]
         },
+
+
+
         {
             "name": "blit",
             "intarget": "swap",
