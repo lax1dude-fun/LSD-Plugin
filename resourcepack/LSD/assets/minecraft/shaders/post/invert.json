@@ -1,0 +1,48 @@
+{
+    "targets": [
+        "swap",
+        "counter",
+        "counter2"
+    ],
+    "passes": [
+        {
+            "name": "invert",
+            "intarget": "minecraft:main",
+            "outtarget": "swap",
+            "auxtargets": [
+                {
+                    "name": "PrevSampler",
+                    "id": "counter"
+                }
+            ],
+            "uniforms": []
+        },
+        {
+            "name": "increment",
+            "intarget": "counter",
+            "outtarget": "counter2",
+            "auxtargets": [
+                {
+                    "name": "GameSampler",
+                    "id": "minecraft:main"
+                }
+            ]
+        },
+        {
+            "name": "increment",
+            "intarget": "counter2",
+            "outtarget": "counter",
+            "auxtargets": [
+                {
+                    "name": "GameSampler",
+                    "id": "minecraft:main"
+                }
+            ]
+        },
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "minecraft:main"
+        }
+    ]
+}
