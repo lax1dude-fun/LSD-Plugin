@@ -5,7 +5,7 @@
         "dstrgb": "zero"
     },
     "vertex": "sobel",
-    "fragment": "counter",
+    "fragment": "m_counter",
     "attributes": [ "Position" ],
     "samplers": [
         { "name": "DiffuseSampler" }

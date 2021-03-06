@@ -2,7 +2,7 @@
     "targets": [
         "swap",
         "counter",
-        "counterswap"
+        "timer"
     ],
     "passes": [
         {
@@ -16,20 +16,20 @@
                 }
             ]
         },
-		{
-           "name": "counter",
-           "intarget": "counter",
-           "outtarget": "counterswap"
-		},
-        {
-            "name": "blit",
-            "intarget": "counterswap",
-            "outtarget": "counter"
-        },
         {
             "name": "blit",
             "intarget": "swap",
             "outtarget": "minecraft:main"
+        },
+		{
+           "name": "m_counter",
+           "intarget": "counter",
+           "outtarget": "swap"
+		},
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "counter"
         }
     ]
 }

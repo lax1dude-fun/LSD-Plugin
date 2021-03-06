@@ -14,14 +14,18 @@ void main() {
 	vec4 counterColor = texture2D(CounterSampler, vec2(0.0, 0.0));
 	float frameCounter = counterColor.r * 256.0 + counterColor.g * 256.0 * 256.0 + counterColor.b * 256.0 * 256.0 * 256.0;
 	
-	vec2 p = vec2(-0.745, 0.186) + 3.0 * ((texCoord * InSize) / (InSize.y) - 0.5) * pow(0.00005, 0.97 - cos(frameCounter * 0.006) * 0.7);
+	vec2 p = vec2(-0.745, 0.186) + 3.0 * ((texCoord * InSize) / (InSize.y) - 0.5) * pow(0.00005, 0.95 - cos(frameCounter * 0.006) * 0.5);
 	
 	float n = 0.0;
 	vec2 z = p * n;
 	
-	for(; (n < 96.0) && (dot(z,z) < 1e4); n++)
+	for(; (n < 256.0) && (dot(z,z) < 1e4); n++)
 		z = vec2(z.x*z.x - z.y*z.y, 2.*z.x*z.y) + p;
 	
-	vec2 f = 0.5 + 0.5 * cos(vec2(3.0, 4.0) + 0.05 * (n - log2(log2(dot(z,z)))));
-	gl_FragColor = texture2D(DiffuseSampler, texCoord * 0.9 + min(f, 1.0) * 0.1);
+	float fact2 = abs(sin(frameCounter * 0.006));
+	float factor = fact2 * fact2;
+	
+	vec2 f = 0.5 + 0.5 * cos(vec2(4.0, 6.0) + 0.05 * (n - log2(log2(dot(z,z)))));
+	
+	gl_FragColor = texture2D(DiffuseSampler, texCoord * (1.0 - factor * 0.4) + min(sqrt(f), 1.0) * factor * 0.3);
 }
