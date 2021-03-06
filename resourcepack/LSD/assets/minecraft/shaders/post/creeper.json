@@ -1,8 +1,7 @@
 {
     "targets": [
         "swap",
-        "counter",
-        "timer"
+        "counter"
     ],
     "passes": [
         {
