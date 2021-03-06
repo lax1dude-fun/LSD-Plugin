@@ -2,6 +2,8 @@ package net.lax1dude.lsd_plugin.tripping;
 
 import java.util.UUID;
 
+import org.bukkit.Location;
+
 public class TripEntityItem extends TripEntity {
 	
 	public float speed;
@@ -33,7 +35,9 @@ public class TripEntityItem extends TripEntity {
 		motionX += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		motionY += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		motionZ += (trip.random.nextFloat() - 0.5f) * 0.05f;
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id, posX + this.trip.player.getLocation().getX(), posY + this.trip.player.getLocation().getY(), posZ + this.trip.player.getLocation().getZ(), 0.0f, 0.0f));
+		
+		Location l = this.trip.player.getLocation();
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id, posX + l.getX(), posY + l.getY(), posZ + l.getZ(), 0.0f, 0.0f));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityVelocity(-id, motionX, motionY, motionZ));
 		if(this.trip.random.nextInt(200) == 0 || this.trip.currentDose < 150.0f) this.alive = false;
 	}

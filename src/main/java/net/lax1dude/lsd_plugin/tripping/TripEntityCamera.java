@@ -2,6 +2,9 @@ package net.lax1dude.lsd_plugin.tripping;
 
 import java.util.UUID;
 
+import org.bukkit.Location;
+import org.bukkit.util.Vector;
+
 import net.lax1dude.lsd_plugin.tripping.TripPlayer.CameraMode;
 
 public class TripEntityCamera extends TripEntity {
@@ -33,13 +36,18 @@ public class TripEntityCamera extends TripEntity {
 	public void tick() {
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(this.trip.player.getEntityId(), 0, 0, (byte)0x20));
 		
+		Location l = this.trip.player.getLocation();
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id,
-				this.trip.player.getLocation().getX(), this.trip.player.getLocation().getY() + getEyeHeight(), this.trip.player.getLocation().getZ(),
-				this.trip.player.getLocation().getYaw(), this.trip.player.getLocation().getPitch()));
+				l.getX(), l.getY() + getEyeHeight(), l.getZ(),
+				l.getYaw(), l.getPitch()));
+		
+		Vector velocity = this.trip.player.getVelocity();
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityVelocity(-id,
-				(float)this.trip.player.getVelocity().getX(), (float)this.trip.player.getVelocity().getY(), (float)this.trip.player.getVelocity().getZ()));
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, this.trip.player.getLocation().getYaw()));
-		if(this.trip.random.nextInt(50) == 0) this.alive = false;
+				(float)velocity.getX(), (float)velocity.getY(), (float)velocity.getZ()));
+		
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, l.getYaw()));
+		
+		if(this.trip.random.nextInt(400) == 0) this.alive = false;
 	}
 
 	@Override

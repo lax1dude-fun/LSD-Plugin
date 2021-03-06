@@ -2,6 +2,8 @@ package net.lax1dude.lsd_plugin.tripping;
 
 import java.util.UUID;
 
+import org.bukkit.Location;
+
 public class TripEntityFlyingMob extends TripEntity {
 
 	private float speed;
@@ -27,6 +29,8 @@ public class TripEntityFlyingMob extends TripEntity {
 		if(trip.random.nextInt(15) == 0) flags |= (0x40 | 0x20);
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityData(-id, 0, 0, flags));
 	}
+	
+	public static final float radToDeg = (float)(360.0D / 2.0D / Math.PI);
 
 	@Override
 	public void tick() {
@@ -39,8 +43,10 @@ public class TripEntityFlyingMob extends TripEntity {
 		motionX += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		motionY += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		motionZ += (trip.random.nextFloat() - 0.5f) * 0.05f;
-		float yaw = (float)Math.atan2(motionX, motionZ) * TripEntityLiving.radToDeg;
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id, posX + this.trip.player.getLocation().getX(), posY + this.trip.player.getLocation().getY(), posZ + this.trip.player.getLocation().getZ(), yaw, 0.0f));
+		float yaw = (float)Math.atan2(motionX, motionZ) * radToDeg;
+		
+		Location l = this.trip.player.getLocation();
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id, posX + l.getX(), posY + l.getY(), posZ + l.getZ(), yaw, 0.0f));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityVelocity(-id, motionX, motionY, motionZ));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, yaw));
 		if(this.trip.random.nextInt(400) == 0) this.alive = false;

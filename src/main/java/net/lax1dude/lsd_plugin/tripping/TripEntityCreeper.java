@@ -37,6 +37,8 @@ public class TripEntityCreeper extends TripEntity {
 		
 		recalculateMotion();
 	}
+	
+	public static final float radToDeg = (float)(360.0D / 2.0D / Math.PI);
 
 	@Override
 	public void tick() {
@@ -48,7 +50,7 @@ public class TripEntityCreeper extends TripEntity {
 		posY = 1.0d + trip.player.getWorld().getHighestBlockYAt((int)Math.floor(posX), (int)Math.floor(posZ));
 		int dx = (int) (posX - this.trip.player.getLocation().getX());
 		int dz = (int) (posZ - this.trip.player.getLocation().getZ());
-		float yaw = 180.0f - (float)Math.atan2(dx, dz) * TripEntityLiving.radToDeg;
+		float yaw = 180.0f - (float)Math.atan2(dx, dz) * radToDeg;
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createMoveEntity(-id, posX, posY, posZ, yaw, 0.0f));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityVelocity(-id, motionX, motionY, motionZ));
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, yaw));

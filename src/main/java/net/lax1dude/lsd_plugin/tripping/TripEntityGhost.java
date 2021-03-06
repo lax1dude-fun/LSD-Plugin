@@ -1,5 +1,7 @@
 package net.lax1dude.lsd_plugin.tripping;
 
+import org.bukkit.Location;
+
 public class TripEntityGhost extends TripEntity {
 	
 	public int particle;
@@ -29,7 +31,9 @@ public class TripEntityGhost extends TripEntity {
 		motionX += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		motionY += (trip.random.nextFloat() - 0.5f) * 0.05f;
 		motionZ += (trip.random.nextFloat() - 0.5f) * 0.05f;
-		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createParticles(particle, true, posX + this.trip.player.getLocation().getX(), posY + this.trip.player.getLocation().getY(), posZ + this.trip.player.getLocation().getZ(), 0.0f, 0.0f, 0.0f, 0.0f, 1));
+		
+		Location l = this.trip.player.getLocation();
+		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createParticles(particle, true, posX + l.getX(), posY + l.getY(), posZ + l.getZ(), 0.0f, 0.0f, 0.0f, 0.0f, 1));
 		if(this.trip.random.nextInt(200) == 0) this.alive = false;
 	}
 
