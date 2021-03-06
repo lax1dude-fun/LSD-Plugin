@@ -100,8 +100,8 @@ vec4 fractalNoiseFilter() {
     return outColor;
 }
 
-vec4 invert() {
-    return vec4(1.0) - texture2D(DiffuseSampler, texCoord);
+vec4 brighten() {
+    return 3.0 * texture2D(DiffuseSampler, texCoord);
 }
 
 void main() {
@@ -115,7 +115,7 @@ void main() {
     if (choice < 0.5) {
         outColor = fractalNoiseFilter();
     } else if (choice < 1.0) {
-        outColor = invert();
+        outColor = brighten();
     }
 
     gl_FragColor = vec4(outColor.xyz, 1.0);
