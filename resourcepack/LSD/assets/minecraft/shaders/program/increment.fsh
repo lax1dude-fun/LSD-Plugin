@@ -7,11 +7,6 @@ varying vec2 texCoord;
 uniform vec2 InSize;
 uniform vec2 OutSize;
 
-//random function I found on stackoverflow
-float rand(vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
-
 bool isInPixel(vec2 pixel) {
     if (
             texCoord.x > (pixel.x) / OutSize.x &&
@@ -42,13 +37,7 @@ void main() {
         vec4 diffuseColor = texture2D(DiffuseSampler, texCoord);
         vec4 timeColor = texture2D(DiffuseSampler, vec2(0.0, 0.0));
         if (timeColor.x <= 1.0/32.0 && timeColor.y <= 1.0/256.0 && timeColor.z <= 1.0/256.0) {
-            vec4 tempColor = vec4(0.0);
-            vec2 sampleCoords = vec2(0.234, 0.345);
-            for (int i = 0; i < 100; i++) {
-                tempColor += texture2D(GameSampler, sampleCoords);
-                sampleCoords = vec2(rand(sampleCoords.xy), rand(sampleCoords.zw));
-            }
-            gl_FragColor = tempColor / vec4(100.0);
+            gl_FragColor = texture2D(GameSampler, vec2(0.234, 0.345));
         } else {
             gl_FragColor = diffuseColor;
         }

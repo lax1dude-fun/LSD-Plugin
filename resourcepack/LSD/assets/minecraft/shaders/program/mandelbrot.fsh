@@ -35,7 +35,7 @@ float s(vec2 p){
 }
 
 float m(vec2 p){
-    vec2 o = sin(vec2(1.93, 0))*.166;
+    vec2 o = sin(vec2(1.93, 0) + (frameCounter / 60.0))*.166;
     float a = s(p + vec2(o.x, 0)), b = s(p + vec2(0, .5 + o.y));
     p = -mat2(.5, -.866, .866, .5)*(p + .5);
     float c = s(p + vec2(o.x, 0)), d = s(p + vec2(0, .5 + o.y)); 
@@ -44,10 +44,14 @@ float m(vec2 p){
 
 vec4 voroniblocks() {
 	vec2 tc = texCoord;
-	tc /= InSize.y/3.;
-    vec4 o = vec4(1)*m(texCoord);
-    vec4 b = vec4(.8, .5, 1, 0)*max(o - m(texCoord + .02), 0.)/.1;
-    return sqrt(pow(vec4(1.5, 1, 1, 0)*o, vec4(1, 3.5, 16, 0))  + b*b*(.5 + b*b));
+	tc /= (InSize.y/3000.0);
+    vec2 o = vec2(1)*m(tc);
+    vec2 b = vec2(.8, .5)*max(o - m(tc + .02), 0.)/.1;
+    vec2 offsets = sqrt(pow(vec2(1.0)*o, vec2(1, 3.5))  + b*b*(.5 + b*b));
+	
+	float blendFac = min(frameCounter / 120.0, 1.0);
+	
+	return texture2D(DiffuseSampler, texCoord + (offsets * 0.1 - 0.05) * blendFac);
 }
 
 void main() {

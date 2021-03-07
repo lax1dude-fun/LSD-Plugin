@@ -11,7 +11,8 @@
            "auxtargets": [
                 {
                     "name": "CounterSampler",
-                    "id": "counter"
+                    "id": "counter",
+					"bilinear": false
                 }
            ]
 		},
@@ -27,7 +28,8 @@
             "auxtargets": [
                 {
                     "name": "CounterSampler",
-                    "id": "counter"
+                    "id": "counter",
+					"bilinear": false
                 }
             ]
         },
