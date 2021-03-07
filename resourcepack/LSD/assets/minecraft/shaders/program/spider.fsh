@@ -451,7 +451,7 @@ void main() {
         renderColor = mainImage();
     }
 	
-	float blendFac = min(timeF / 60.0, 1.0);
-	blendFac = blendFac * blendFac * blendFac;
-	gl_FragColor = (renderColor * blendFac) + (texture2D(DiffuseSampler, texCoord) * (1.0 - blendFac));
+	//float blendFac = min(timeF / 60.0, 1.0);
+	//blendFac = blendFac * blendFac * blendFac;
+	gl_FragColor = renderColor; //(renderColor * blendFac) + (texture2D(DiffuseSampler, texCoord) * (1.0 - blendFac));
 }
