@@ -10,6 +10,7 @@ uniform vec2 InSize;
 
 float frameCounter;
 
+//MANDELBROT ====================================
 vec4 mandelbrot() {
 	vec2 p = vec2(-0.745, 0.186) + 3.0 * ((texCoord * InSize) / (InSize.y) - 0.5) * pow(0.00005, 0.95 - cos(frameCounter * 0.006) * 0.5);
 	
@@ -27,6 +28,28 @@ vec4 mandelbrot() {
 	return texture2D(DiffuseSampler, texCoord * (1.0 - factor * 0.4) + min(sqrt(f), 1.0) * factor * 0.3);
 }
 
+//voroniblocks ======================================
+float s(vec2 p){
+    p = fract(p) - .5;
+    return (dot(p, p)*2. + .5)*max(abs(p.x)*.866 + p.y*.5, -p.y);
+}
+
+float m(vec2 p){
+    vec2 o = sin(vec2(1.93, 0))*.166;
+    float a = s(p + vec2(o.x, 0)), b = s(p + vec2(0, .5 + o.y));
+    p = -mat2(.5, -.866, .866, .5)*(p + .5);
+    float c = s(p + vec2(o.x, 0)), d = s(p + vec2(0, .5 + o.y)); 
+    return min(min(a, b), min(c, d))*2.;
+}
+
+vec4 voroniblocks() {
+	vec2 tc = texCoord;
+	tc /= InSize.y/3.;
+    vec4 o = vec4(1)*m(texCoord);
+    vec4 b = vec4(.8, .5, 1, 0)*max(o - m(texCoord + .02), 0.)/.1;
+    return sqrt(pow(vec4(1.5, 1, 1, 0)*o, vec4(1, 3.5, 16, 0))  + b*b*(.5 + b*b));
+}
+
 void main() {
 	vec4 counterColor = texture2D(CounterSampler, vec2(0.0, 0.0));
 	frameCounter = counterColor.r * 256.0 + counterColor.g * 256.0 * 256.0 + counterColor.b * 256.0 * 256.0 * 256.0;
@@ -37,7 +60,7 @@ void main() {
 	if(rngNum < 0.5) {
 		gl_FragColor = mandelbrot();
 	}else {
-		gl_FragColor = vec4(1.0);//texture2D(DiffuseSampler, vec2(1.0) - texCoord);
+		gl_FragColor = voroniblocks();//texture2D(DiffuseSampler, vec2(1.0) - texCoord);
 	}
 	
 }
