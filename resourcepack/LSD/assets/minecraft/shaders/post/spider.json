@@ -21,20 +21,20 @@
             ]
         },
         {
-            "name": "blit",
-            "intarget": "minecraft:main",
-            "outtarget": "swap"
-        },
-        {
             "name": "spider",
-            "intarget": "swap",
-            "outtarget": "minecraft:main",
+            "intarget": "minecraft:main",
+            "outtarget": "swap",
             "auxtargets": [
                 {
                     "name": "IncrementSampler",
                     "id": "counter"
                 }
             ]
+        },
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "minecraft:main"
         }
     ]
 }
