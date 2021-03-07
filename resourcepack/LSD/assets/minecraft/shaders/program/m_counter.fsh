@@ -22,13 +22,15 @@ bool isInPixel(vec2 pixel) {
 
 void main() {
 	if(isInPixel(vec2(0.0, 1.0))) {
-		vec4 input = texture2D(CounterSampler, vec2(0.0, (1.5 / InSize.y)));
-		if(input.r <= 0.0 && input.g <= 0.0 && input.b <= 0.0) {
-			gl_FragColor = min(texture2D(DiffuseSampler, vec2(0.25, 0.25)) + (1.0 / 255.0), 1.0);
-			return;
+		vec4 input = texture2D(CounterSampler, texCoord);
+		if(input.r == 0.0 && input.g == 0.0 && input.b == 0.0) {
+			gl_FragColor = vec4(min(texture2D(DiffuseSampler, vec2(0.25, 0.25)).rgb + (1.0 / 255.0), 1.0), 1.0);
+		}else {
+			gl_FragColor = vec4(input.rgb, 1.0);
 		}
+		return;
 	}else if(isInPixel(vec2(0.0, 0.0))) {
-		vec4 input = texture2D(CounterSampler, vec2(0.0));
+		vec4 input = texture2D(CounterSampler, texCoord);
 		input.r += (1.0 / 255.0);
 		if(input.r > 1.0) {
 			input.r = 0.0;
@@ -44,5 +46,5 @@ void main() {
 		gl_FragColor = vec4(input.rgb, 1.0);
 		return;
 	}
-	gl_FragColor = texture2D(CounterSampler, texCoord);
+	discard;
 }
