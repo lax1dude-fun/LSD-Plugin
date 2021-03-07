@@ -4,6 +4,22 @@
         "counter"
     ],
     "passes": [
+		{
+           "name": "m_counter",
+           "intarget": "minecraft:main",
+           "outtarget": "swap",
+           "auxtargets": [
+                {
+                    "name": "CounterSampler",
+                    "id": "counter"
+                }
+           ]
+		},
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "counter"
+        },
         {
             "name": "mandelbrot",
             "intarget": "minecraft:main",
@@ -19,16 +35,6 @@
             "name": "blit",
             "intarget": "swap",
             "outtarget": "minecraft:main"
-        },
-		{
-           "name": "m_counter",
-           "intarget": "counter",
-           "outtarget": "swap"
-		},
-        {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "counter"
         }
     ]
 }

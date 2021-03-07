@@ -8,11 +8,7 @@ varying vec2 texCoord;
 uniform sampler2D DiffuseSampler;
 uniform sampler2D IncrementSampler;
 
-//COMMON
-float getTime() {
-    vec4 countColor = texture2D(IncrementSampler, vec2(0.0, 0.0));
-    return countColor.x * 256.0 + countColor.y * 256.0 * 256.0 + countColor.z * 256.0 * 256.0 * 256.0;
-}
+float timeF;
 
 float smoothstep2(float a, float b, float x) {
     float fac = x * x * x * (x * (x * 6.0 - 15.0) + 10.0);
@@ -210,7 +206,7 @@ float rand(vec2 co){
 
 //marches the rays, calculates normals, determines and returns color, etc.
 vec4 fractal3D() {
-    float time = getTime();
+    float time = timeF;
     
     fractalRotationParams = noise3(time * 0.001) * 2.0;
     uFractalColor = noise3(time * 0.003 + 5.0) * 1.5 + vec3(1.0);
@@ -299,9 +295,9 @@ float de(vec3 pos) {
     float fl=pos.y-3.013;
     float d=min(fl,length(p)/DEfactor-.0005);
 	d=min(d,-pos.y+3.9);
-    d=min(d,rr);
+    //d=min(d,rr);
     if (abs(d-fl)<.0001) hitfloor=1.;
-    if (abs(d-rr)<.0001) hitrock=1.;
+    //if (abs(d-rr)<.0001) hitrock=1.;
     return d;
 }
 
@@ -363,7 +359,7 @@ mat2 rot;
 
 vec3 light(in vec3 p, in vec3 dir) {
 	float hf=hitfloor;
-	float hr=hitrock;
+	float hr=0.0;//hitrock;
 	vec3 n=normal(p);
 	float sh=clamp(shadow(p, lightdir)+hf+hr,.4,1.);
 	float ao=calcAO(p,n);
@@ -375,7 +371,7 @@ vec3 light(in vec3 p, in vec3 dir) {
 	vec3 col=mix(vec3(k*1.1,k*k*1.3,k*k*k),vec3(k),.45)*2.;
 	vec3 pp=p-vec3(0.,3.03,tt);
     pp.yz*=rot;
-    if (hr>0.) col=vec3(.9,.8,.7)*(1.+kset(pp*2.)*.3);
+    //if (hr>0.) col=vec3(.9,.8,.7)*(1.+kset(pp*2.)*.3);
     col=col*ao*(amb*vec3(.9,.85,1.)+diff*vec3(1.,.9,.9))+spec*vec3(1,.9,.5)*.7;	
 	return col;
 }
@@ -421,8 +417,8 @@ vec3 raymarch(in vec3 from, in vec3 dir)
 vec4 mainImage()
 {
 
-    iTime = getTime() * 1.0 / 60.0;
-	tt= getTime() * 1.0 / 60.0 *.05;
+    iTime = timeF * 1.0 / 60.0;
+	tt= timeF * 1.0 / 60.0 *.05;
     vec2 uv = texCoord.xy*2.-1.;
 	uv.y*=OutSize.y/OutSize.x;
 	float t=iTime*.15;
@@ -440,21 +436,22 @@ vec4 mainImage()
 	return vec4(color,1.);
 }
 
-
-
-
-
-
-
 void main() {
-
+	vec4 countColor = texture2D(IncrementSampler, vec2(0.0, 0.0));
+    timeF = countColor.x * 256.0 + countColor.y * 256.0 * 256.0 + countColor.z * 256.0 * 256.0 * 256.0;
+	
     vec4 choiceColor = texture2D(IncrementSampler, vec2(1.5 / OutSize.x, 0.0));
-
+	
+	vec4 renderColor;
     float choice = rand(choiceColor.x + choiceColor.y * 256.0 + choiceColor.z * 256.0 * 256.0);
 
     if (choice < 0.5) {
-        gl_FragColor = fractal3D();
+        renderColor = fractal3D();
     } else {
-        gl_FragColor = mainImage();
+        renderColor = mainImage();
     }
+	
+	float blendFac = min(timeF / 60.0, 1.0);
+	blendFac = blendFac * blendFac * blendFac;
+	gl_FragColor = (renderColor * blendFac) + (texture2D(DiffuseSampler, texCoord) * (1.0 - blendFac));
 }
