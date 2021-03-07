@@ -1,34 +1,17 @@
 {
     "targets": [
         "swap",
-        "counter",
-        "counter2"
+        "counter"
     ],
     "passes": [
-
-
-
         {
             "name": "blit",
-            "intarget": "minecraft:main",
+            "intarget": "counter",
             "outtarget": "swap"
         },
-
-
         {
             "name": "increment",
-            "intarget": "counter",
-            "outtarget": "counter2",
-            "auxtargets": [
-                {
-                    "name": "GameSampler",
-                    "id": "minecraft:main"
-                }
-            ]
-        },
-        {
-            "name": "increment",
-            "intarget": "counter2",
+            "intarget": "swap",
             "outtarget": "counter",
             "auxtargets": [
                 {
@@ -37,7 +20,11 @@
                 }
             ]
         },
-        
+        {
+            "name": "blit",
+            "intarget": "minecraft:main",
+            "outtarget": "swap"
+        },
         {
             "name": "spider",
             "intarget": "swap",

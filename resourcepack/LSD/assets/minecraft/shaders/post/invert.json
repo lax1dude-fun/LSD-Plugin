@@ -2,7 +2,6 @@
     "targets": [
         "swap",
         "counter",
-        "counter2",
         "previous"
     ],
     "passes": [
@@ -11,6 +10,25 @@
             "intarget": "swap",
             "outtarget": "previous",
             "uniforms": []
+        },
+
+
+
+        {
+            "name": "increment",
+            "intarget": "counter",
+            "outtarget": "swap",
+            "auxtargets": [
+                {
+                    "name": "GameSampler",
+                    "id": "minecraft:main"
+                }
+            ]
+        },
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "counter"
         },
 
 
@@ -30,31 +48,6 @@
                 }
             ],
             "uniforms": []
-        },
-
-
-
-        {
-            "name": "increment",
-            "intarget": "counter",
-            "outtarget": "counter2",
-            "auxtargets": [
-                {
-                    "name": "GameSampler",
-                    "id": "minecraft:main"
-                }
-            ]
-        },
-        {
-            "name": "increment",
-            "intarget": "counter2",
-            "outtarget": "counter",
-            "auxtargets": [
-                {
-                    "name": "GameSampler",
-                    "id": "minecraft:main"
-                }
-            ]
         },
 
 
