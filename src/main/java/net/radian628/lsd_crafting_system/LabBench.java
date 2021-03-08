@@ -1,9 +1,6 @@
 package net.radian628.lsd_crafting_system;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
