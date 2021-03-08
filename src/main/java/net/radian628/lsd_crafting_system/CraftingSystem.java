@@ -2,7 +2,9 @@ package net.radian628.lsd_crafting_system;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,8 @@ public class CraftingSystem implements Listener {
 	ArrayList<LabBenchRecipe> recipes;
 	HashMap<String, FileConfiguration> configs;
 	
+	HashSet<Material> signs;
+	
 	public CraftingSystem(PluginMain javaPlugin) {
 		rand = new Random();
 		plugin = javaPlugin;
@@ -57,6 +61,18 @@ public class CraftingSystem implements Listener {
 		configs = new HashMap<String, FileConfiguration>();
 		addConfig("recipes");
 		getAllRecipes();
+		
+		Material[] signArray = {
+				Material.OAK_WALL_SIGN,
+				Material.JUNGLE_WALL_SIGN,
+				Material.ACACIA_WALL_SIGN,
+				Material.DARK_OAK_WALL_SIGN,
+				Material.BIRCH_WALL_SIGN,
+				Material.SPRUCE_WALL_SIGN,
+				Material.CRIMSON_WALL_SIGN,
+				Material.WARPED_WALL_SIGN
+			};
+		signs = new HashSet<Material>(Arrays.asList(signArray));
 	}
 	
 	public void addConfig(String name) {
@@ -302,10 +318,17 @@ public class CraftingSystem implements Listener {
 	public void onSignChange(SignChangeEvent event) {
 
 		Block block = event.getBlock();
-		if (block.getType() == Material.OAK_SIGN || block.getType() == Material.OAK_WALL_SIGN) {
-			plugin.getLogger().info(event.getLine(0));
+		if (signs.contains(block.getType())) {
 			
-			if (event.getLine(0).equalsIgnoreCase("Lab Bench")) {
+			boolean hasLabBench = false;
+			for (int i = 0; i < 4; i++) {
+				if (event.getLine(i).equalsIgnoreCase("Lab Bench")) {
+					hasLabBench = true;
+					break;
+				}
+			}
+			
+			if (hasLabBench) {
 				ArrayList<Block> quartzAdjacents = getMatchingAdjacents(block, Material.QUARTZ_BRICKS);
 				if (quartzAdjacents.size() == 1) {
 					Block labBenchPiece = quartzAdjacents.get(0);
