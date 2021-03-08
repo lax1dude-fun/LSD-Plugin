@@ -445,12 +445,17 @@ void main() {
 	vec4 renderColor;
     float choice = rand(choiceColor.x + choiceColor.y * 256.0 + choiceColor.z * 256.0 * 256.0);
 
+    timeF += choiceColor.x * 256.0 * 256.0;
+
     if (choice < 0.5) {
         renderColor = fractal3D();
     } else {
         renderColor = mainImage();
     }
 	
+    
+    timeF -= choiceColor.x * 256.0 * 256.0;
+
 	float blendFac = min(timeF / 60.0, 1.0);
 	blendFac = blendFac * blendFac * blendFac;
 	gl_FragColor = (renderColor * blendFac) + (texture2D(DiffuseSampler, texCoord) * (1.0 - blendFac));

@@ -32,9 +32,6 @@ void main() {
     if (isInPixel(vec2(0.0, 0.0))) {
         vec4 diffuseColor = texture2D(DiffuseSampler, texCoord);
         vec4 outColor = diffuseColor;
-        if (atStart(outColor)) {
-            outColor.y = rand(texture2D(GameSampler, vec2(0.345, 0.643)).xy);
-        }
         if (outColor.y == 1.0) {
             outColor.y = 0.0;
             outColor.z += 1.0/256.0;

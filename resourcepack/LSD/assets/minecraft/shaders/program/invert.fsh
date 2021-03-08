@@ -11,6 +11,8 @@ varying vec2 texCoord;
 
 float time;
 
+float seed;
+
 //COMMON
 float getTime() {
     vec4 countColor = texture2D(CounterSampler, vec2(0.0, 0.0));
@@ -31,7 +33,7 @@ vec3 smootherstepVec(vec3 v) {
 }
 
 float rand(float x) {
-    return fract(sin(x) * 100000.0);
+    return fract(sin(x + seed) * 100000.0);
 }
 
 vec3 rand3D(vec3 pos) {
@@ -461,6 +463,8 @@ void main() {
     time = getTime();
 
     vec4 choiceColor = texture2D(CounterSampler, vec2(1.5 / OutSize.x, 0.0));
+
+    seed = rand(choiceColor.y);
 
     float choice = rand(choiceColor.x + choiceColor.y * 256.0 + choiceColor.z * 256.0 * 256.0);
 
