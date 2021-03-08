@@ -244,11 +244,23 @@ public class CraftingSystem implements Listener {
 		entity.addEquipmentLock(EquipmentSlot.FEET, LockType.ADDING_OR_CHANGING);
 		entity.addEquipmentLock(EquipmentSlot.HAND, LockType.ADDING_OR_CHANGING);
 		entity.addEquipmentLock(EquipmentSlot.OFF_HAND, LockType.ADDING_OR_CHANGING);
+		entity.addScoreboardTag("LabEquipmentModel");
 	}
 	
 	@EventHandler
 	public void onBreakBlock(BlockBreakEvent event) {
 		handleCustomBlockDrop(event.getBlock(), event.getPlayer(), event);
+		
+		if (event.getBlock().getType() == Material.QUARTZ_BRICKS) {
+			List<Entity> entities = event.getPlayer().getNearbyEntities(6.0, 6.0, 6.0);
+			for (Entity entity : entities) {
+				if (entity.getType() == EntityType.ARMOR_STAND && entity.getScoreboardTags().contains("LabEquipmentModel")) {
+					if (entity.getWorld().getBlockAt(entity.getLocation().add(0.0, 1.0, 0.0)).equals(event.getBlock())) {
+						entity.remove();
+					}
+				}
+			}
+		}
 	}
 	
 	@EventHandler
