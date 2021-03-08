@@ -24,10 +24,17 @@ bool isInPixel(vec2 pixel) {
     return false;
 }
 
+bool atStart(vec4 timeColor) {
+    return timeColor.x <= 1.0/128.0 && timeColor.y <= 1.0/256.0 && timeColor.z <= 1.0/256.0;
+}
+
 void main() {
     if (isInPixel(vec2(0.0, 0.0))) {
         vec4 diffuseColor = texture2D(DiffuseSampler, texCoord);
         vec4 outColor = diffuseColor;
+        if (atStart(outColor)) {
+            outColor.y = rand(texture2D(GameSampler, vec2(0.345, 0.643)).xy);
+        }
         if (outColor.y == 1.0) {
             outColor.y = 0.0;
             outColor.z += 1.0/256.0;
@@ -41,7 +48,7 @@ void main() {
     } else if (isInPixel(vec2(1.0, 0.0))) {
         vec4 diffuseColor = texture2D(DiffuseSampler, texCoord);
         vec4 timeColor = texture2D(DiffuseSampler, vec2(0.0, 0.0));
-        if (timeColor.x <= 1.0/128.0 && timeColor.y <= 1.0/256.0 && timeColor.z <= 1.0/256.0) {
+        if (atStart(timeColor)) {
             vec4 tempColor = vec4(0.0);
             vec2 sampleCoords = vec2(0.234, 0.345);
             for (int i = 0; i < 5; i++) {
