@@ -80,11 +80,11 @@ float noise(vec3 inputVec) {
     );
 }
 
-vec3 noise3(float input) {
+vec3 noise3(float inp) {
     return vec3(
-        noise(vec3(input)),
-        noise(vec3(input + 10.0)),
-        noise(vec3(input + 20.0))
+        noise(vec3(inp)),
+        noise(vec3(inp + 10.0)),
+        noise(vec3(inp + 20.0))
     );
 }
 

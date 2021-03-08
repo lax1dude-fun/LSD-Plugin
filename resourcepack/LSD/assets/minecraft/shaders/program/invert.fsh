@@ -8,10 +8,8 @@ uniform vec2 OutSize;
 
 varying vec2 texCoord;
 
-
-float time;
-
-float seed;
+float seed = 0.0;
+float time = 0.0;
 
 //COMMON
 float getTime() {
@@ -98,11 +96,11 @@ float noise(vec3 inputVec) {
     );
 }
 
-vec3 noise3(float input) {
+vec3 noise3(float inp) {
     return vec3(
-        noise(vec3(input)),
-        noise(vec3(input + 10.0)),
-        noise(vec3(input + 20.0))
+        noise(vec3(inp)),
+        noise(vec3(inp + 10.0)),
+        noise(vec3(inp + 20.0))
     );
 }
 
