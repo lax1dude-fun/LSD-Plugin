@@ -5,12 +5,6 @@
         "previous"
     ],
     "passes": [
-        {
-            "name": "blit",
-            "intarget": "swap",
-            "outtarget": "previous",
-            "uniforms": []
-        },
 
 
 
@@ -26,9 +20,15 @@
             ]
         },
         {
-            "name": "blit",
+            "name": "increment",
             "intarget": "swap",
-            "outtarget": "counter"
+            "outtarget": "counter",
+            "auxtargets": [
+                {
+                    "name": "GameSampler",
+                    "id": "minecraft:main"
+                }
+            ]
         },
 
 
@@ -56,6 +56,12 @@
             "name": "blit",
             "intarget": "swap",
             "outtarget": "minecraft:main"
+        },
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "previous",
+            "uniforms": []
         }
     ]
 }

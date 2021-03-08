@@ -41,14 +41,14 @@ void main() {
     } else if (isInPixel(vec2(1.0, 0.0))) {
         vec4 diffuseColor = texture2D(DiffuseSampler, texCoord);
         vec4 timeColor = texture2D(DiffuseSampler, vec2(0.0, 0.0));
-        if (timeColor.x <= 1.0/32.0 && timeColor.y <= 1.0/256.0 && timeColor.z <= 1.0/256.0) {
+        if (timeColor.x <= 1.0/128.0 && timeColor.y <= 1.0/256.0 && timeColor.z <= 1.0/256.0) {
             vec4 tempColor = vec4(0.0);
             vec2 sampleCoords = vec2(0.234, 0.345);
-            for (int i = 0; i < 100; i++) {
-                tempColor += texture2D(GameSampler, sampleCoords);
-                sampleCoords = vec2(rand(sampleCoords.rg), rand(sampleCoords.rg));
+            for (int i = 0; i < 5; i++) {
+                 tempColor += texture2D(GameSampler, sampleCoords);
+                 sampleCoords = vec2(rand(sampleCoords.rg), rand(sampleCoords.rg));
             }
-            gl_FragColor = tempColor / vec4(100.0);
+            gl_FragColor = tempColor / 5.0;
         } else {
             gl_FragColor = diffuseColor;
         }
