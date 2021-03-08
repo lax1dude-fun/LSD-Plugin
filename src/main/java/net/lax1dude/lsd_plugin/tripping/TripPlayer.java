@@ -144,7 +144,7 @@ public class TripPlayer {
 					this.addEntity(currentCameraMob = new TripEntityCamera(this, CameraMode.values()[random.nextInt(3) + 1]));
 				}
 				if((currentCameraMob == null || currentCameraMob.alive == false) && currentDose > 300f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
-					String[] mobTable = new String[] {"creeper", "enderman", "spider", "skeleton"};
+					String[] mobTable = new String[] {"creeper", "spider", "skeleton"};
 					this.addEntity(currentCameraMob = new TripEntityExternalCamera(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
 				}
 			}
