@@ -56,7 +56,8 @@ public class TripPlayer {
 	public void tick() {
 		currentDose *= 0.99986138f;
 		timer += 1;
-
+		
+		/*
 		if(currentDose < 80.0f && prevDose >= 80.0f) {
 			PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorderWarn(TripPlayer.this.player.getWorld().getWorldBorder().getWarningDistance()));
 		}
@@ -72,6 +73,7 @@ public class TripPlayer {
 		if(currentDose >= 210.0f && prevDose < 210.0f) {
 			PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorder(0.0D));
 		}
+		*/
 		
 		ArrayList<TripEntity> entitiesToTick = new ArrayList();
 		entitiesToTick.addAll(entities);
@@ -138,12 +140,12 @@ public class TripPlayer {
 					String[] mobTable = new String[] {"donkey", "mule", "bat", "pig", "pig", "pig", "pig", "pig", "sheep", "sheep", "sheep", "cow", "cow", "cow", "chicken", "chicken", "squid", "wolf", "mooshroom", "mooshroom", "mooshroom", "mooshroom", "ocelot", "horse", "llama", "villager", "villager", "turtle"};
 					this.addEntity(new TripEntityCreeper(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
 				}
-				if(currentDose > 260f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
-					this.addEntity(new TripEntityCamera(this, CameraMode.values()[random.nextInt(3) + 1]));
+				if((currentCameraMob == null || currentCameraMob.alive == false) && currentDose > 260f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
+					this.addEntity(currentCameraMob = new TripEntityCamera(this, CameraMode.values()[random.nextInt(3) + 1]));
 				}
-				if(currentDose > 300f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
+				if((currentCameraMob == null || currentCameraMob.alive == false) && currentDose > 300f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
 					String[] mobTable = new String[] {"creeper", "enderman", "spider", "skeleton"};
-					this.addEntity(new TripEntityExternalCamera(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
+					this.addEntity(currentCameraMob = new TripEntityExternalCamera(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
 				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {

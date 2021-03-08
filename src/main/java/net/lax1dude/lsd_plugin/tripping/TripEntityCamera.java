@@ -47,7 +47,7 @@ public class TripEntityCamera extends TripEntity {
 		
 		PacketConstructors.sendPacket(this.trip.player, PacketConstructors.createEntityLook(-id, l.getYaw()));
 		
-		if(this.trip.random.nextInt(400) == 0) this.alive = false;
+		if(this.trip.random.nextInt(100) == 0) this.alive = false;
 	}
 
 	@Override

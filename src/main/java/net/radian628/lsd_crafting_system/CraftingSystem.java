@@ -52,7 +52,6 @@ public class CraftingSystem implements Listener {
 	public CraftingSystem(PluginMain javaPlugin) {
 		rand = new Random();
 		plugin = javaPlugin;
-		plugin.getLogger().info("test");
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		recipes = new ArrayList<LabBenchRecipe>();
 		configs = new HashMap<String, FileConfiguration>();
