@@ -75,6 +75,12 @@ public class TripPlayer {
 		}
 		*/
 		
+		if(currentCameraMob == null || currentCameraMob.alive == false) {
+			if(currentDose >= 80.0f) {
+				PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorderWarn((int)TripPlayer.this.player.getWorld().getWorldBorder().getSize()));
+			}
+		}
+		
 		ArrayList<TripEntity> entitiesToTick = new ArrayList();
 		entitiesToTick.addAll(entities);
 		
@@ -142,10 +148,14 @@ public class TripPlayer {
 				}
 				if((currentCameraMob == null || currentCameraMob.alive == false) && currentDose > 260f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
 					this.addEntity(currentCameraMob = new TripEntityCamera(this, CameraMode.values()[random.nextInt(3) + 1]));
+					PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorderWarn(TripPlayer.this.player.getWorld().getWorldBorder().getWarningDistance()));
+					PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorder(TripPlayer.this.player.getWorld().getWorldBorder().getSize()));
 				}
 				if((currentCameraMob == null || currentCameraMob.alive == false) && currentDose > 300f && timer % (random.nextInt((int)(50000 / currentDose) + 1) + 1) == 0) {
 					String[] mobTable = new String[] {"creeper", "spider", "skeleton"};
 					this.addEntity(currentCameraMob = new TripEntityExternalCamera(this, (random.nextFloat() - 0.5f) * 32.0f, 0.0f, (random.nextFloat() - 0.5f) * 32.0f, random.nextFloat() * 0.3f + 0.1f, mobTable[random.nextInt(mobTable.length)]));
+					PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorderWarn(TripPlayer.this.player.getWorld().getWorldBorder().getWarningDistance()));
+					PacketConstructors.sendPacket(player, PacketConstructors.createWorldBorder(TripPlayer.this.player.getWorld().getWorldBorder().getSize()));
 				}
 			}
 			if(timer % (random.nextInt((int)(2000 / currentDose)) + 1) == 0) {
