@@ -254,6 +254,8 @@ vec4 fractal3D() {
 
 
 //SHAMELESSLY STOLEN FROM SHADERTOY: https://www.shadertoy.com/view/4lX3Rj
+//"Ancient Temple" shader originally made by Kali: https://www.shadertoy.com/user/Kali
+//License: https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US
 const int Iterations=14;
 const float detail=.00002;
 const float Scale=2.;
